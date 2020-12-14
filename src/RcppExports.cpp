@@ -206,6 +206,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// vclamp
+arma::vec vclamp(arma::vec x, double minx, double maxx);
+RcppExport SEXP _stfusion_vclamp(SEXP xSEXP, SEXP minxSEXP, SEXP maxxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type minx(minxSEXP);
+    Rcpp::traits::input_parameter< double >::type maxx(maxxSEXP);
+    rcpp_result_gen = Rcpp::wrap(vclamp(x, minx, maxx));
+    return rcpp_result_gen;
+END_RCPP
+}
 // sp_pred_par
 arma::mat sp_pred_par(arma::mat ref, arma::mat img, arma::uvec dims, arma::uvec indx, int w, int nng);
 RcppExport SEXP _stfusion_sp_pred_par(SEXP refSEXP, SEXP imgSEXP, SEXP dimsSEXP, SEXP indxSEXP, SEXP wSEXP, SEXP nngSEXP) {
@@ -239,6 +252,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_stfusion_filter", (DL_FUNC) &_stfusion_filter, 2},
     {"_stfusion_local_regression", (DL_FUNC) &_stfusion_local_regression, 4},
     {"_stfusion_sp_pred", (DL_FUNC) &_stfusion_sp_pred, 5},
+    {"_stfusion_vclamp", (DL_FUNC) &_stfusion_vclamp, 3},
     {"_stfusion_sp_pred_par", (DL_FUNC) &_stfusion_sp_pred_par, 6},
     {NULL, NULL, 0}
 };

@@ -8,15 +8,15 @@
 #' \code{nsim=30} to downscale Sentinel-3 images (300x300m) to Sentinel-2
 #' resolution (10x10m).
 #' 
-#' @param f1 fine image from t1 as a \code{RasterBrick}
-#' @param c1 coarse image from t1 as a \code{RasterBrick}
-#' @param c2 coarse image from t2 as a \code{RasterBrick}
-#' @param r  number that defines the radius of the neighborhood
+#' @param f1 fine image from t1 as a \code{RasterStack}
+#' @param c1 coarse image from t1 as a \code{RasterStack}
+#' @param c2 coarse image from t2 as a \code{RasterStack}
+#' @param sngb.lr number that defines the radius of the neighborhood
 #' @param nsim number of similar pixels in each neighborhood
 #' @param spw number with the weight of the spatial dependence 
-#' @param scale the dynamic range of the image (default, \code{c(0,255)}
+#' @param scale the dynamic range of the image (default, \code{c(0,1)}
 #' 
-#' @return the fine image predicted at t2 as a \code{RasterBrick}
+#' @return the fine image predicted at t2 as a \code{RasterStack}
 #' 
 #' @references Wang, Q., & Atkinson, P. M. (2018). 
 #' Spatio-temporal fusion for daily Sentinel-2 images.
@@ -24,31 +24,6 @@
 #' 
 #' @example
 #' 
-#' library(raster)
-#' library(stars)
-#' 
-#' # Landsat-like image at t1
-#' f1.l <- raster(nrow=1600,ncol=1600)
-#' f1.l[] <- rnorm(1600^2)
-#' f1 <- brick(f1.l, f1.l, f1.l, f1.l)
-#' 
-#' # Landsat-like image at t2
-#' f2 <- brick(f1)
-#' trend <- 2 * f1[] + 3
-#' error <- rnorm((4 * 1600^2),mean = 0.01)
-#' f2[] <- trend + error
-#' 
-#' # Modis-like images
-#' c1 <- aggregate(f1, fact=16)
-#' c2 <- aggregate(f2, fact=16)
-#' 
-#' # prediction
-#' f2.pred <- fit_fc(f1,c1,c2,r=5,nsim=5,spw=1)
-#' 
-#' # check results
-#' smp <- sample(1:1600^2,100)
-#' plot(f2[][smp,], f2.pred[][smp,])
-#' abline(0,1)
 #' 
 fit_fc <- function(f1,
                    c1,
@@ -94,7 +69,7 @@ fit_fc <- function(f1,
   out.v <- spatial_filtering(f1.mat, f2.mat, dim(f1)[1:2], r.r, ngb.wgt, nsim)
   
   # saving results
-  f2.pred<-stack(f2.hat)
+  f2.pred<- stack(f2.hat)
   f2.pred[] <- out.v
   names(f2.pred) <- names(f2.hat)
   f2.pred <- clamp(f2.pred, lower = min(scale), upper = max(scale))

@@ -3,16 +3,17 @@
 #' Predicts the fine image at a time tk based on a series of fine images around
 #' tk and a coarse image from that time.
 #' 
-#' @param f.ts  a series of fine images as a \code{RasterStack}
-#' @param c2 coarse image from t2 as a \code{RasterBrick}
+#' @param f.ts a series of fine images as a list of \code{RasterStack}s
+#' @param c2 coarse image at tk as a \code{RasterStack}
 #' @param sngb.lr number of neighboring pixels for the virtual image generation
 #' @param sngb.wg number of neighboring pixels for the residual compensation
 #' @param nsim number of similar pixels in each neighborhood
 #' @param scale the dynamic range of the image (default, \code{c(0,1)}
+#' @param ncores number of cores for parallel procesing
 #' 
 #' @return the fine image predicted at tk as a \code{RasterStack}
 
-uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1)){
+uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores){
   
   # minimum sngb.wg
   sngb.lr <- max(1, sngb.lr)
@@ -101,7 +102,7 @@ uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1)){
   # temporal change coarse
   delta.c <- c2 - c.virt
   delta.f <- as(.raster_warp(delta.c, f.virt, method = "cubic"), "Raster")
-  f.err <- sp_pred_par(f.virt[], delta.f[], ftm, nly, sngb.wg, nsim, n = 4)
+  f.err <- .sp_pred_par(f.virt, delta.f, ftm, nly, sngb.wg, nsim, n = ncores)
   
   # Final estimate
   f2.h <- f.virt + f.err
@@ -169,21 +170,22 @@ uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1)){
   
 }
 
-.chunk_to_cells <- function(chnki, chnkwi, cpp = TRUE){
-  
-  nmes <- colnames(chunks)
-  rows <- grep("rw", nmes)
-  cols <- grep("cl", nmes)
-  
-  reli <- c(chnki[rows] - chnkwi[1], chnki[cols] - chnkwi[3]) + (!cpp * 1)
-  rwcl <- expand.grid(reli[3]:reli[4],reli[1]:reli[2])[,2:1]
-  ncol <- diff(chnkwi[cols]) + 1
-  cids <- ncol * rwcl[,1] + rwcl[,2]
-  
-  return(cids)
-}
 
-.par_sp_weights <- function(x, y, ftm, nly, w, nsim, n = 4){
+.sp_pred_par <- function(x, y, ftm, nly, w, nsim, n = 4){
+  
+  .chunk_to_cells <- function(chnki, chnkwi, cpp = TRUE){
+  
+    nmes <- colnames(chunks)
+    rows <- grep("rw", nmes)
+    cols <- grep("cl", nmes)
+    
+    reli <- c(chnki[rows] - chnkwi[1], chnki[cols] - chnkwi[3]) + (!cpp * 1)
+    rwcl <- expand.grid(reli[3]:reli[4],reli[1]:reli[2])[,2:1]
+    ncol <- diff(chnkwi[cols]) + 1
+    cids <- ncol * rwcl[,1] + rwcl[,2]
+    
+    return(cids)
+  }
   
   fnm <- dim(ftm)
   chunks <- .split_raster(fnm, n)
@@ -203,6 +205,6 @@ uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1)){
       sp_pred_par(x.chnk[], y.chnk[], dim(x.chnk), i.chnk, w, nsim)
                      
   }
-  parallel::stopCluster(cl)
+  parallel::stopCluster(clustr)
   return(out)
 }

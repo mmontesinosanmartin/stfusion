@@ -3,12 +3,17 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
+arma::vec vclamp(arma::vec x, double minx, double maxx){
+  return clamp(x, minx, maxx);
+}
+
+// [[Rcpp::export]]
 arma::mat sp_pred_par(arma::mat ref,
-                   arma::mat img,
-                   arma::uvec dims,
-                   arma::uvec indx,
-                   int w,
-                   int nng) {
+                      arma::mat img,
+                      arma::uvec dims,
+                      arma::uvec indx,
+                      int w,
+                      int nng) {
   
   // initialize
   int npx = size(indx)[0];
@@ -22,7 +27,6 @@ arma::mat sp_pred_par(arma::mat ref,
   
   // for each pixel
   for(int i = 0; i < npx; i++) {
-  // int i = 1699375;
     // stop if needed
     Rcpp::checkUserInterrupt();
     
