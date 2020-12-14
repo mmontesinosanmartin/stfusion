@@ -3,7 +3,7 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-arma::mat sp_pred2(arma::mat ref,
+arma::mat sp_pred_par(arma::mat ref,
                    arma::mat img,
                    arma::uvec dims,
                    arma::uvec indx,
