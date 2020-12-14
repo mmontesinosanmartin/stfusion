@@ -6,22 +6,6 @@
 
 using namespace Rcpp;
 
-// sp_pred2
-arma::mat sp_pred2(arma::mat ref, arma::mat img, arma::uvec dims, arma::uvec indx, int w, int nng);
-RcppExport SEXP _stfusion_sp_pred2(SEXP refSEXP, SEXP imgSEXP, SEXP dimsSEXP, SEXP indxSEXP, SEXP wSEXP, SEXP nngSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type ref(refSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type img(imgSEXP);
-    Rcpp::traits::input_parameter< arma::uvec >::type dims(dimsSEXP);
-    Rcpp::traits::input_parameter< arma::uvec >::type indx(indxSEXP);
-    Rcpp::traits::input_parameter< int >::type w(wSEXP);
-    Rcpp::traits::input_parameter< int >::type nng(nngSEXP);
-    rcpp_result_gen = Rcpp::wrap(sp_pred2(ref, img, dims, indx, w, nng));
-    return rcpp_result_gen;
-END_RCPP
-}
 // cpp_rmse
 arma::rowvec cpp_rmse(arma::mat x, arma::mat y, bool byband);
 RcppExport SEXP _stfusion_cpp_rmse(SEXP xSEXP, SEXP ySEXP, SEXP bybandSEXP) {
@@ -48,49 +32,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec& >::type wg(wgSEXP);
     Rcpp::traits::input_parameter< int& >::type nsim(nsimSEXP);
     rcpp_result_gen = Rcpp::wrap(spatial_filtering(f1, f2, fdims, w, wg, nsim));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_hello_world
-arma::mat rcpparma_hello_world();
-RcppExport SEXP _stfusion_rcpparma_hello_world() {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpparma_hello_world());
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_outerproduct
-arma::mat rcpparma_outerproduct(const arma::colvec& x);
-RcppExport SEXP _stfusion_rcpparma_outerproduct(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_outerproduct(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_innerproduct
-double rcpparma_innerproduct(const arma::colvec& x);
-RcppExport SEXP _stfusion_rcpparma_innerproduct(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_innerproduct(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_bothproducts
-Rcpp::List rcpparma_bothproducts(const arma::colvec& x);
-RcppExport SEXP _stfusion_rcpparma_bothproducts(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_bothproducts(x));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -265,15 +206,26 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// sp_pred_par
+arma::mat sp_pred_par(arma::mat ref, arma::mat img, arma::uvec dims, arma::uvec indx, int w, int nng);
+RcppExport SEXP _stfusion_sp_pred_par(SEXP refSEXP, SEXP imgSEXP, SEXP dimsSEXP, SEXP indxSEXP, SEXP wSEXP, SEXP nngSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type ref(refSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type img(imgSEXP);
+    Rcpp::traits::input_parameter< arma::uvec >::type dims(dimsSEXP);
+    Rcpp::traits::input_parameter< arma::uvec >::type indx(indxSEXP);
+    Rcpp::traits::input_parameter< int >::type w(wSEXP);
+    Rcpp::traits::input_parameter< int >::type nng(nngSEXP);
+    rcpp_result_gen = Rcpp::wrap(sp_pred_par(ref, img, dims, indx, w, nng));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_stfusion_sp_pred2", (DL_FUNC) &_stfusion_sp_pred2, 6},
     {"_stfusion_cpp_rmse", (DL_FUNC) &_stfusion_cpp_rmse, 3},
     {"_stfusion_spatial_filtering", (DL_FUNC) &_stfusion_spatial_filtering, 6},
-    {"_stfusion_rcpparma_hello_world", (DL_FUNC) &_stfusion_rcpparma_hello_world, 0},
-    {"_stfusion_rcpparma_outerproduct", (DL_FUNC) &_stfusion_rcpparma_outerproduct, 1},
-    {"_stfusion_rcpparma_innerproduct", (DL_FUNC) &_stfusion_rcpparma_innerproduct, 1},
-    {"_stfusion_rcpparma_bothproducts", (DL_FUNC) &_stfusion_rcpparma_bothproducts, 1},
     {"_stfusion_sequ", (DL_FUNC) &_stfusion_sequ, 1},
     {"_stfusion_get_ngbs", (DL_FUNC) &_stfusion_get_ngbs, 4},
     {"_stfusion_ngb_dist", (DL_FUNC) &_stfusion_ngb_dist, 4},
@@ -287,6 +239,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_stfusion_filter", (DL_FUNC) &_stfusion_filter, 2},
     {"_stfusion_local_regression", (DL_FUNC) &_stfusion_local_regression, 4},
     {"_stfusion_sp_pred", (DL_FUNC) &_stfusion_sp_pred, 5},
+    {"_stfusion_sp_pred_par", (DL_FUNC) &_stfusion_sp_pred_par, 6},
     {NULL, NULL, 0}
 };
 
