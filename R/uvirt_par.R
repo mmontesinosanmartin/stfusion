@@ -9,11 +9,11 @@
 #' @param sngb.wg number of neighboring pixels for the residual compensation
 #' @param nsim number of similar pixels in each neighborhood
 #' @param scale the dynamic range of the image (default, \code{c(0,1)}
-#' @param ncores number of cores for parallel procesing
+#' @param ncores number of cores for parallel processing
 #' 
 #' @return the fine image predicted at tk as a \code{RasterStack}
 
-uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores){
+uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores=1){
   
   # minimum sngb.wg
   sngb.lr <- max(1, sngb.lr)
@@ -53,19 +53,14 @@ uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores){
   # coarse virtual image
   # regression coefficients
   # error image
-  a.c <- list()
-  b.c <- list()
-  f.virt <- list()
-  c.virt <- list()
   c.coefs <- .gen_tmp(ctm, ntm + 1)
-  e.f <- list()
-  
+  clustr <- makeCluster(ncores)
+  doParallel::registerDoParallel(clustr)
+
   # for each layer
-  for(i in 1:nly){
-    
-    # communication is key
-    message(paste("predicting layer", i, "..."))
-    
+  tmp <- foreach(i = 1:nly,
+                   .packages = c("raster", "stfusion")) %dopar% {
+
     # data
     x.train <- c.ts[[i]]
     x.predi <- f.ts[[i]]
@@ -75,8 +70,8 @@ uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores){
     x.tmat <- as.matrix(x.train[]);
     y.tmat <- as.matrix(y.train[]);
     c.coefs[] <- local_regression(x.tmat, y.tmat, cnm, sngb.lr)
-    a.c[[i]] <- c.coefs[[1:ntm]]
-    b.c[[i]] <- c.coefs[[ntm + 1]]
+    a.c <- c.coefs[[1:ntm]]
+    b.c <- c.coefs[[ntm + 1]]
     
     # fine coefficients
     f.coefs <- resample(c.coefs, ftm, method = "ngb")
@@ -85,17 +80,24 @@ uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores){
     
     # virtual images
     if(ntm == 1) {
-      c.virt[[i]] <- a.c[[i]] * x.train + b.c[[i]]
-      f.virt[[i]] <- a.f * x.predi + b.f
+      c.virt <- a.c * x.train + b.c
+      f.virt <- a.f * x.predi + b.f
     }else{
-      c.virt[[i]] <- calc(a.c[[i]] * x.train, sum, na.rm = TRUE) + b.c[[i]]
-      f.virt[[i]] <- calc(a.f * x.predi, sum, na.rm = TRUE) + b.f 
+      c.virt <- calc(a.c * x.train, sum, na.rm = TRUE) + b.c
+      f.virt <- calc(a.f * x.predi, sum, na.rm = TRUE) + b.f 
     }
+    
+    # housekeeping
+    out <- list(c.virt, f.virt)
+    rm(x.train, x.predi, y.train, x.tmat, y.tmat, a.c, b.c, f.coefs, a.f, b.f, c.virt, f.virt)
+    gc()
+    return(out)
   }
+  parallel::stopCluster(clustr)
   
   # final result
-  c.virt <- stack(c.virt)
-  f.virt <- stack(f.virt)
+  c.virt <- stack(lapply(tmp, function(x)x[[1]]))
+  f.virt <- stack(lapply(tmp, function(x)x[[2]]))
   
   # WEIGHTING RESIDUALS
   # ====================
@@ -170,8 +172,7 @@ uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores){
   
 }
 
-
-.sp_pred_par <- function(x, y, ftm, nly, w, nsim, n = 4){
+.sp_pred_par <- function(x, y, ftm, nly, w, nsim, n = 1){
   
   .chunk_to_cells <- function(chnki, chnkwi, cpp = TRUE){
   
@@ -202,8 +203,10 @@ uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores){
       x.chnk <- crop(x, extent(x,chunkw[i,1],chunkw[i,2],chunkw[i,3],chunkw[i,4]))
       y.chnk <- crop(y, extent(y,chunkw[i,1],chunkw[i,2],chunkw[i,3],chunkw[i,4]))
       i.chnk <- .chunk_to_cells(chunks[i,], chunkw[i,])
-      sp_pred_par(x.chnk[], y.chnk[], dim(x.chnk), i.chnk, w, nsim)
-                     
+      res <- sp_pred_par(x.chnk[], y.chnk[], dim(x.chnk), i.chnk, w, nsim)
+      rm(x.chnk, y.chnk, i.chnk)
+      gc()
+      return(res)
   }
   parallel::stopCluster(clustr)
   return(out)
