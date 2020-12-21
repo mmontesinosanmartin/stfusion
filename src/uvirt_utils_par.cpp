@@ -13,7 +13,8 @@ arma::mat sp_pred_par(arma::mat ref,
                       arma::uvec dims,
                       arma::uvec indx,
                       int w,
-                      int nng) {
+                      int nng,
+                      double spwgt) {
   
   // initialize
   int npx = size(indx)[0];
@@ -51,7 +52,7 @@ arma::mat sp_pred_par(arma::mat ref,
         // similarity, distance, and neighbors
         int ind = (ncols * j) + cll + k;
         simis(z) = sum(pow((ref.row(ind) - ref.row(cll)), 2));
-        indst(z) = 1. / (1 + sqrt(pow(j, 2) + pow(k, 2)) / w);
+        indst(z) = 1. / (1 + sqrt(pow(j, 2) + pow(k, 2)) / spwgt);
         imng.row(z) = img.row(ind);
         // next
         z++; 

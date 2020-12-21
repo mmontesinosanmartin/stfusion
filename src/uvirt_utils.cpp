@@ -219,7 +219,6 @@ arma::mat local_regression(arma::mat& x, arma::mat& y, arma::ivec& cdims, int w)
   arma::uvec kind(1);
   // for each pixel
   for(int i = 0; i < npx; i++) {
-  // int i = 3834;
     // neighboring pixels
     arma::uvec inds = get_ngbs(i, w, nrow, ncol);
     // regression data
@@ -250,7 +249,8 @@ arma::mat sp_pred(arma::mat ref,
                    arma::mat img,
                    arma::uvec dims,
                    int w,
-                   int nng) {
+                   int nng,
+                   double spwgt) {
   
   // initialize
   int npx = ref.n_rows;
@@ -264,7 +264,6 @@ arma::mat sp_pred(arma::mat ref,
   
   // for each pixel
   for(int i = 0; i < npx; i++) {
-    // int i = 1699375;
     // stop if needed
     Rcpp::checkUserInterrupt();
     
@@ -278,6 +277,7 @@ arma::mat sp_pred(arma::mat ref,
     int wre =  w; if((row+w) > (nrows - 1)) wre = nrows - row - 1;
     // initialize output
     int wln = (abs(wcs) + abs(wce) + 1) * (abs(wrs) + abs(wre) + 1);
+    arma::uvec inds(wln);
     arma::vec simis(wln);
     arma::vec indst(wln);
     arma::mat imng(wln,nbd);
@@ -287,8 +287,9 @@ arma::mat sp_pred(arma::mat ref,
       for(int k = wcs; k <= wce; k++){
         // similarity, distance, and neighbors
         int ind = (ncols * j) + i + k;
+        inds(z) = ind;
         simis(z) = sum(pow((ref.row(ind) - ref.row(i)), 2));
-        indst(z) = 1. / (1 + sqrt(pow(j, 2) + pow(k, 2)) / w);
+        indst(z) = 1. / (1 + sqrt(pow(j, 2) + pow(k, 2)) / spwgt);
         imng.row(z) = img.row(ind);
         // next
         z++; 
@@ -302,7 +303,7 @@ arma::mat sp_pred(arma::mat ref,
     // normalize weights
     arma::vec  wgts = indst(bstp) / (sum(indst(bstp)) + 1e-8);
     // prediction
-    arma::rowvec  pred = sum(ibst.each_col() % wgts, 0);
+    arma::rowvec pred = sum(ibst.each_col() % wgts, 0);
     out.row(i) = pred;
   }
   // result

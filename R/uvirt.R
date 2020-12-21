@@ -14,8 +14,9 @@
 
 uvirt <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1)){
   
-  # minimum sngb.wg
+  # settings
   sngb.lr <- max(1, sngb.lr)
+  spwgt <- sngb.wg + 0.5
   
   # COARSE IMAGES
   # ==============
@@ -102,7 +103,7 @@ uvirt <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1)){
   delta.c <- c2 - c.virt
   delta.f <- as(.raster_warp(delta.c, f.virt, method = "cubic"), "Raster")
   f.err <- .gen_tmp(ftm, nly);
-  f.err[] <- sp_pred(f.virt[], delta.f[], fnm, sngb.wg, nsim)
+  f.err[] <- sp_pred(f.virt[], delta.f[], fnm, sngb.wg, nsim, spwgt)
   
   # Final estimate
   f2.h <- f.virt + f.err

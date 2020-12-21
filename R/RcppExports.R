@@ -57,15 +57,15 @@ local_regression <- function(x, y, cdims, w) {
     .Call(`_stfusion_local_regression`, x, y, cdims, w)
 }
 
-sp_pred <- function(ref, img, dims, w, nng) {
-    .Call(`_stfusion_sp_pred`, ref, img, dims, w, nng)
+sp_pred <- function(ref, img, dims, w, nng, spwgt) {
+    .Call(`_stfusion_sp_pred`, ref, img, dims, w, nng, spwgt)
 }
 
 vclamp <- function(x, minx, maxx) {
     .Call(`_stfusion_vclamp`, x, minx, maxx)
 }
 
-sp_pred_par <- function(ref, img, dims, indx, w, nng) {
-    .Call(`_stfusion_sp_pred_par`, ref, img, dims, indx, w, nng)
+sp_pred_par <- function(ref, img, dims, indx, w, nng, spwgt) {
+    .Call(`_stfusion_sp_pred_par`, ref, img, dims, indx, w, nng, spwgt)
 }
 

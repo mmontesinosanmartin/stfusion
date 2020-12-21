@@ -106,13 +106,19 @@ fit_fc <- function(f1,
 
 # warps with stars from raster
 .raster_warp <- function(r, ref, method, usegdal = TRUE){
-  st_warp(st_as_stars(r), st_as_stars(ref), method = method, use_gdal = usegdal)
+  raster::stack(lapply(1:nlayers(r),
+    function(i, r, ref, method, usegdal){
+      as(st_warp(st_as_stars(r[[i, drop = FALSE]]),
+        st_as_stars(raster(ref)),
+        method = method,
+        use_gdal = usegdal),
+      "Raster")
+   }, r = r, ref = ref, method = method, usegdal = usegdal))
 }
 
 # performs linear regression predictions
 .pixel_predicton <- function(x, slope, inter, error){
-  as(.raster_warp(slope, x, method = "near") * st_as_stars(x) +
+  .raster_warp(slope, x, method = "near") * x +
        .raster_warp(inter, x, method = "near") +
-       .raster_warp(error, x, method = "cubic"),
-     "Raster")
+       .raster_warp(error, x, method = "cubic")
 }

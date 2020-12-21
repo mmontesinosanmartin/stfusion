@@ -15,20 +15,20 @@
 
 uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores=1){
   
-  # minimum sngb.wg
+  # settings
   sngb.lr <- max(1, sngb.lr)
+  spwgt <- sngb.wg + 0.5
   
   # COARSE IMAGES
   # ==============
   f.ts <- .img_rearrange(f.ts)
   c.ts <- lapply(f.ts, function(x, ctm){
-    # c.hat <- resample(x, ctm)
     x[is.na(x)] <- Inf
-    c.hat <- aggregate(x, fact = 17, mean)
+    c.hat <- .raster_warp(x, ctm, "average")
     c.hat[is.infinite(c.hat)] <- NA
     c.hat[] <- blur(as.matrix(c.hat[]),dim(c.hat), 1)
     c.hat
-  },ctm = c2)
+  },ctm = raster(c2))
   
   # fine info
   # n x m number of pixels
@@ -89,7 +89,10 @@ uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores=1
     
     # housekeeping
     out <- list(c.virt, f.virt)
-    rm(x.train, x.predi, y.train, x.tmat, y.tmat, a.c, b.c, f.coefs, a.f, b.f, c.virt, f.virt)
+    rm(x.train, x.predi, y.train,
+       x.tmat, y.tmat, a.c, b.c,
+       f.coefs, a.f, b.f, c.virt,
+       f.virt)
     gc()
     return(out)
   }
@@ -103,8 +106,11 @@ uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores=1
   # ====================
   # temporal change coarse
   delta.c <- c2 - c.virt
-  delta.f <- as(.raster_warp(delta.c, f.virt, method = "cubic"), "Raster")
-  f.err <- .sp_pred_par(f.virt, delta.f, ftm, nly, sngb.wg, nsim, n = ncores)
+  delta.f <- .raster_warp(delta.c, raster(f.virt), method = "cubic")
+  f.err <- .sp_pred_par(f.virt, delta.f,
+                        ftm, nly,
+                        sngb.wg, nsim, spwgt,
+                        n = ncores)
   
   # Final estimate
   f2.h <- f.virt + f.err
@@ -135,7 +141,14 @@ uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores=1
 }
 
 .raster_warp <- function(r, ref, method, usegdal = TRUE){
-  st_warp(st_as_stars(r), st_as_stars(ref), method = method, use_gdal = usegdal)
+  raster::stack(lapply(1:nlayers(r),
+                       function(i, r, ref, method, usegdal){
+                         as(st_warp(st_as_stars(r[[i, drop = FALSE]]),
+                                    st_as_stars(raster(ref)),
+                                    method = method,
+                                    use_gdal = usegdal),
+                            "Raster")
+                       }, r = r, ref = ref, method = method, usegdal = usegdal))
 }
 
 .split_raster <- function(dims, n){
@@ -172,7 +185,7 @@ uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores=1
   
 }
 
-.sp_pred_par <- function(x, y, ftm, nly, w, nsim, n = 1){
+.sp_pred_par <- function(x, y, ftm, nly, w, nsim, spwgt, n = 1){
   
   .chunk_to_cells <- function(chnki, chnkwi, cpp = TRUE){
   
@@ -203,7 +216,7 @@ uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores=1
       x.chnk <- crop(x, extent(x,chunkw[i,1],chunkw[i,2],chunkw[i,3],chunkw[i,4]))
       y.chnk <- crop(y, extent(y,chunkw[i,1],chunkw[i,2],chunkw[i,3],chunkw[i,4]))
       i.chnk <- .chunk_to_cells(chunks[i,], chunkw[i,])
-      res <- sp_pred_par(x.chnk[], y.chnk[], dim(x.chnk), i.chnk, w, nsim)
+      res <- sp_pred_par(x.chnk[], y.chnk[], dim(x.chnk), i.chnk, w, nsim, spwgt)
       rm(x.chnk, y.chnk, i.chnk)
       gc()
       return(res)

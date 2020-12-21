@@ -192,8 +192,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // sp_pred
-arma::mat sp_pred(arma::mat ref, arma::mat img, arma::uvec dims, int w, int nng);
-RcppExport SEXP _stfusion_sp_pred(SEXP refSEXP, SEXP imgSEXP, SEXP dimsSEXP, SEXP wSEXP, SEXP nngSEXP) {
+arma::mat sp_pred(arma::mat ref, arma::mat img, arma::uvec dims, int w, int nng, double spwgt);
+RcppExport SEXP _stfusion_sp_pred(SEXP refSEXP, SEXP imgSEXP, SEXP dimsSEXP, SEXP wSEXP, SEXP nngSEXP, SEXP spwgtSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -202,7 +202,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::uvec >::type dims(dimsSEXP);
     Rcpp::traits::input_parameter< int >::type w(wSEXP);
     Rcpp::traits::input_parameter< int >::type nng(nngSEXP);
-    rcpp_result_gen = Rcpp::wrap(sp_pred(ref, img, dims, w, nng));
+    Rcpp::traits::input_parameter< double >::type spwgt(spwgtSEXP);
+    rcpp_result_gen = Rcpp::wrap(sp_pred(ref, img, dims, w, nng, spwgt));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -220,8 +221,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // sp_pred_par
-arma::mat sp_pred_par(arma::mat ref, arma::mat img, arma::uvec dims, arma::uvec indx, int w, int nng);
-RcppExport SEXP _stfusion_sp_pred_par(SEXP refSEXP, SEXP imgSEXP, SEXP dimsSEXP, SEXP indxSEXP, SEXP wSEXP, SEXP nngSEXP) {
+arma::mat sp_pred_par(arma::mat ref, arma::mat img, arma::uvec dims, arma::uvec indx, int w, int nng, double spwgt);
+RcppExport SEXP _stfusion_sp_pred_par(SEXP refSEXP, SEXP imgSEXP, SEXP dimsSEXP, SEXP indxSEXP, SEXP wSEXP, SEXP nngSEXP, SEXP spwgtSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -231,7 +232,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::uvec >::type indx(indxSEXP);
     Rcpp::traits::input_parameter< int >::type w(wSEXP);
     Rcpp::traits::input_parameter< int >::type nng(nngSEXP);
-    rcpp_result_gen = Rcpp::wrap(sp_pred_par(ref, img, dims, indx, w, nng));
+    Rcpp::traits::input_parameter< double >::type spwgt(spwgtSEXP);
+    rcpp_result_gen = Rcpp::wrap(sp_pred_par(ref, img, dims, indx, w, nng, spwgt));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -251,9 +253,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_stfusion_filter_nna", (DL_FUNC) &_stfusion_filter_nna, 1},
     {"_stfusion_filter", (DL_FUNC) &_stfusion_filter, 2},
     {"_stfusion_local_regression", (DL_FUNC) &_stfusion_local_regression, 4},
-    {"_stfusion_sp_pred", (DL_FUNC) &_stfusion_sp_pred, 5},
+    {"_stfusion_sp_pred", (DL_FUNC) &_stfusion_sp_pred, 6},
     {"_stfusion_vclamp", (DL_FUNC) &_stfusion_vclamp, 3},
-    {"_stfusion_sp_pred_par", (DL_FUNC) &_stfusion_sp_pred_par, 6},
+    {"_stfusion_sp_pred_par", (DL_FUNC) &_stfusion_sp_pred_par, 7},
     {NULL, NULL, 0}
 };
 
