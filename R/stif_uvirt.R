@@ -1,6 +1,6 @@
-#' Applies the UVIRT spatiotemporal data fusion model
+#' @title Applies the UVIRT spatiotemporal data fusion model
 #'
-#' Predicts the fine image at a time tk based on a series of fine images around
+#' @description Predicts the fine image at a time tk based on a series of fine images around
 #' tk and a coarse image from that time.
 #' 
 #' @param f.ts  a series of fine images as a \code{RasterStack}
@@ -21,14 +21,7 @@ stif_uvirt <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1)){
   # COARSE IMAGES
   # ==============
   f.ts <- .img_rearrange(f.ts)
-  c.ts <- lapply(f.ts, function(x, ctm){
-    # c.hat <- resample(x, ctm)
-    x[is.na(x)] <- Inf
-    c.hat <- aggregate(x, fact = 17, mean)
-    c.hat[is.infinite(c.hat)] <- NA
-    c.hat[] <- blur(as.matrix(c.hat[]),dim(c.hat), 1)
-    c.hat
-  },ctm = c2)
+  c.ts <- get_coarse(f.ts, raster(c2))
   
   # fine info
   # n x m number of pixels

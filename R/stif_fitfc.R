@@ -32,12 +32,20 @@ stif_fitfc <- function(f1,
                    sngb.wg,
                    nsim,
                    scale = c(0,1)) {
+  # coarse info
+  # n x m number of pixels
+  # no. of layers
+  # a template for coarse images
+  cnm <- dim(c2)
+  nly <- cnm[3]
+  ctm <- raster(c2); ctm[] <- NA
   
   # initial settings
   w <- matrix(1,nrow=(2*sngb.lr+1),ncol=(2*sngb.lr+1))
   
   # step 1: regression fitting
   # regression parameters
+  c2 <- resample(c2, c1, method = "ngb")
   regressions <- .local_trend(c1, c2, w)
   a <- regressions$slope
   b <- regressions$inter

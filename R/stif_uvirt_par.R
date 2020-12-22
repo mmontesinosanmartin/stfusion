@@ -1,6 +1,6 @@
-#' Applies the UVIRT spatiotemporal data fusion model
+#' @title Applies the UVIRT spatio-temporal data fusion model
 #'
-#' Predicts the fine image at a time tk based on a series of fine images around
+#' @description Predicts the fine image at a time tk based on a series of fine images around
 #' tk and a coarse image from that time.
 #' 
 #' @param f.ts a series of fine images as a list of \code{RasterStack}s
@@ -13,7 +13,7 @@
 #' 
 #' @return the fine image predicted at tk as a \code{RasterStack}
 
-uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores=1){
+stif_uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores=1){
   
   # settings
   sngb.lr <- max(1, sngb.lr)
@@ -22,13 +22,7 @@ uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores=1
   # COARSE IMAGES
   # ==============
   f.ts <- .img_rearrange(f.ts)
-  c.ts <- lapply(f.ts, function(x, ctm){
-    x[is.na(x)] <- Inf
-    c.hat <- .raster_warp(x, ctm, "average")
-    c.hat[is.infinite(c.hat)] <- NA
-    c.hat[] <- blur(as.matrix(c.hat[]),dim(c.hat), 1)
-    c.hat
-  },ctm = raster(c2))
+  c.ts <- get_coarse(f.ts, raster(c2))
   
   # fine info
   # n x m number of pixels
@@ -58,8 +52,7 @@ uvirt_par <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1), ncores=1
   doParallel::registerDoParallel(clustr)
 
   # for each layer
-  tmp <- foreach(i = 1:nly,
-                   .packages = c("raster", "stfusion")) %dopar% {
+  tmp <- foreach(i = 1:nly, .packages = c("raster", "stfusion")) %dopar% {
 
     # data
     x.train <- c.ts[[i]]

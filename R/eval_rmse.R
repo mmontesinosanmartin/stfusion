@@ -15,10 +15,12 @@
 #' y <- x
 #' eval_rmse(x,y)
 #' 
-eval_rmse <- function(x, y, by.band = FALSE){
+eval_rmse <- function(x, y, by.band = FALSE, rm.na = TRUE){
   x.mat <- as.matrix(x[])
   y.mat <- as.matrix(y[])
-  out <- cpp_rmse(x.mat, y.mat, byband = by.band)
+  compl <- 1:nrow(y.mat)
+  if(rm.na)compl <- complete.cases(cbind(x.mat, y.mat))
+  out <- cpp_rmse(x.mat[compl,], y.mat[compl,], byband = by.band)
   return(out)
   # rmse.bnd <- sqrt(apply(as.matrix(((x-y)^2)[]),2, mean, na.rm = TRUE))
   # if(by.band){

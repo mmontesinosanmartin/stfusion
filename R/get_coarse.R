@@ -1,10 +1,10 @@
-#' Gets the coarse version of a fine-scale image
+#' @title Obtains the coarse version of a fine-scale image
 #' 
-#' Aggregates to the coarse resolution, applies a Gaussian kernel
+#' @description Aggregates to the coarse resolution, applies a Gaussian kernel
 #' as a representation of the point spread function , and applies a
 #' linear model to radiometrically correct the images.
 #' 
-#' The slope and intercept for the radiometric corrections must have the
+#' @details The slope and intercept for the radiometric corrections must have the
 #' same spatial resolution as the coarse template and the same number of 
 #' bands as the multi-band fine scale image.
 #' 
@@ -26,26 +26,30 @@ get_coarse <- function(fimg,
                        corr = FALSE,
                        verbose = FALSE){
   
-  # initialize
-  is.series <- is.list(fimg)
-  if(is.series){
+  # check imgages
+  is.img.series <- is.list(fimg)
+  if(is.img.series){
     nimg <- length(fimg)
     nlyr <- nlayers(fimg[[1]])
-    imgs <- fimg
-    tmps <- tmpl
+    fimg <- fimg
   } else {
     nimg <- 1
     nlyr <- nlayers(fimg)
     imgs <- list(); imgs[[1]] <- fimg
-    tmps <- list(); tmps[[1]] <- tmpl
   }
-  out <- list()
+  
+  # check templates
+  is.tmp.series <- is.list(tmpl)
+  if(!is.tmp.series) {
+    message("we use the same template for all")
+    tmpl <- list(tmpl)
+  }
 
-  # checks for radiometric corrections
+  # checks for rad. cor.
   rad.cor <- !is.null(slope)&!is.null(inter)&corr == TRUE
   if(rad.cor){
     if(length(slope) != nimg | length(inter) != nimg)
-      message("slope and inter must be the same length as imput images")
+      message("slope and inter must be the same length as fimg")
       stop()
   }
   
@@ -54,12 +58,13 @@ get_coarse <- function(fimg,
   # Aggregate to the coarse-scale resolution (ignore clouds)
   # Blur using a Gaussian kernel (sigma = 1)
   # Apply the radiometric correction
+  out <- list()
   for(i in 1:nimg){
     
     if(verbose)message(paste0("processing image ", i))
     
     fimgi <- fimg[[i]]
-    tmpli <- tmps[[i]]
+    tmpli <- tmpl[[ifelse(is.tmp.series, i, 1)]]
     
     fimgi[is.na(fimgi)] <- Inf
     chati <- warp_stack(fimgi, tmpli, "average", usegdal = TRUE)
@@ -73,7 +78,7 @@ get_coarse <- function(fimg,
   }
 
   # return
-  if(!is.series) out <- unlist(out)
+  if(!is.img.series) out <- unlist(out)
   return(out)
   
 }
