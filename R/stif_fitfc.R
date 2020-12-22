@@ -25,7 +25,7 @@
 #' @example
 #' 
 #' 
-fit_fc <- function(f1,
+stif_fitfc <- function(f1,
                    c1,
                    c2,
                    sngb.lr,

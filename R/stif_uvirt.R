@@ -12,7 +12,7 @@
 #' 
 #' @return the fine image predicted at tk as a \code{RasterStack}
 
-uvirt <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1)){
+stif_uvirt <- function(f.ts, c2, sngb.lr, sngb.wg, nsim, scale = c(0,1)){
   
   # settings
   sngb.lr <- max(1, sngb.lr)
