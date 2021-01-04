@@ -1,77 +1,70 @@
-#' Applies the radiometric correction to a series of images
+#' @title Applies the radiometric correction to multispectral images
 #' 
-#' Calculates and applies the radiometric corrections to a series of
-#' images captured on the same dates.
+#' @description Computes the slope and intercept of matching pairs of 
+#' images from different sensors and performs the radiometric correction.
+#' Applies the correction over \code{x} to resemble those in \code{y}.
 #' 
-#' The parameters are local slopes and intercepts from regressions.
+#' @details Both \code{x} and \code{y} must have the same resolution and
+#' number of bands. When \code{x} are fine-scale images, transformation
+#' to lower scales can be done with \link{get_coarse()}. The lists must
+#' be named with the capturing date of the image.
 #' 
-#' @param cimg coarse-scale images, as a \code{RasterStack}
-#' @param chat estimated coarse-scale image, as a \code{RasterStack}
+#' @param x a list of images (\code{RasterStacks}s) to be transformed
+#' @param y a list of reference images (\code{RasterStack}s)
 #' @param wndw integer, spatial neighbors for the local regression. Default 2.
 #' @param pars whether you want to return the parameters. Default \code{FALSE}.
 #' @param verbose whether to print the processing steps. Default \code{FALSE}.
+#'
+#' @returns a list of corrected images
 #' 
-#' @returns a \code{RasterStack} with the corrected image
-#' 
-apply_radiocor <- function(cimg, chat, wndw = 2, pars = FALSE, verbose = FALSE){
+
+apply_radiocor <- function(x, y, wndw = 2, pars = FALSE, verbose = FALSE){
   
-  if(!is.list(cimg)){
-    message("cimg must be a list")
-    stop()
-  }
-  if(!is.list(chat)){
-    message("chat must be a list")
-    stop()
-  }
-  nimg <- length(cimg)
-  if(nimg != length(chat)){
-    message("cimg and chat must be the same length")
-    stop()
+  # matching pairs
+  x.mtch <- .match_dates(names(x), names(y))
+  y.mtch <- .match_dates(names(y), names(x))
+  x.mtch <- x[x.mtch]
+  y.mtch <- y[y.mtch]
+  
+  # rearrange
+  x.mtch <- stfusion:::.img_rearrange(x.mtch)
+  y.mtch <- stfusion:::.img_rearrange(y.mtch)
+  
+  # info
+  tmpl <- raster(x.mtch[[1]])
+  nlyr <- length(x.mtch)
+  dims <- dim(x.mtch[[1]])
+  
+  # coefficients
+  slope <- stfusion:::.gen_tmp(raster(x.mtch[[1]]), nlyr)
+  inter <- stfusion:::.gen_tmp(raster(x.mtch[[1]]), nlyr)
+  if(verbose) message("estimating correction parameters...")
+  for(i in 1:nlyr){
+    if(verbose) message("layer ", i, " is now being processed")
+    x.mat <- as.matrix(x.mtch[[i]][])
+    y.mat <- as.matrix(y.mtch[[i]][])
+    coefs <- radio_par(x.mat, y.mat, dims, wndw)
+    slope[[i]][] <- coefs[,1]
+    inter[[i]][] <- coefs[,2]
   }
   
-  out <- list()
-  for(i in 1:nimg){
-    if(verbose) message(paste0("processing image ", i))
-    out[[i]] <- radiocor(cimg[[i]], chat[[i]], wndw = wndw, pars = pars)
+  # correction
+  if(verbose) message("applying the correction...")
+  x.new <- lapply(x, function(x, slope, inter){
+    slope * x + inter
+  }, slope = slope, inter = inter)
+  names(x.new) <- names(x)
+  
+  # return
+  out <- list(imgs = x.new)
+  if(pars){
+    out$slope <- slope
+    out$inter <- inter
   }
   return(out)
 }
 
-radiocor <- function(cimg, chat, wndw = wndw, pars = FALSE){
-  
-  wmat <- matrix(1,nrow=(2*wndw+1),ncol=(2*wndw+1))
-  m <- .local_trend(cimg, chat, wmat)
-  if(pars) {
-    out <- list(slope = stack(a), inter = stack(b), error = stack(e))
-  } else {
-    out <- m$slope * chat + m$inter
-  }
-  return(out)
-  
-}
-
-.local_trend <- function(c1, c2, w){
-  
-  c1.avg <- stack(lapply(as.list(c1),function(x, w, fun, na.rm, pad, padValue){
-    focal(x = x, w = w, fun = fun, na.rm = na.rm, pad = pad, padValue = padValue)
-  }, w = w, fun = mean, na.rm = TRUE, pad = TRUE, padValue = NA))
-  c2.avg <- stack(lapply(as.list(c2),function(x, w, fun, na.rm, pad, padValue){
-    focal(x = x, w = w, fun = fun, na.rm = na.rm, pad = pad, padValue = padValue)
-  }, w = w, fun = mean, na.rm = TRUE, pad = TRUE, padValue = NA))
-  cx.cov <- stack(lapply(as.list(c1 * c2),function(x, w, fun, na.rm, pad, padValue){
-    focal(x = x, w = w, fun = fun, na.rm = na.rm, pad = pad, padValue = padValue)
-  }, w = w, fun = mean, na.rm = TRUE, pad = TRUE, padValue = NA)) - (c1.avg * c2.avg)
-  c1.var <- stack(lapply(as.list(c1 * c1),function(x, w, fun, na.rm, pad, padValue){
-    focal(x = x, w = w, fun = fun, na.rm = na.rm, pad = pad, padValue = padValue)
-  }, w = w, fun = mean, na.rm = TRUE, pad = TRUE, padValue = NA)) - (c1.avg * c1.avg)
-  
-  a <- cx.cov / c1.var
-  b <- c2.avg - a * c1.avg
-  e <- c2 - a * c1 - b
-  
-  return(list(
-    slope = a,
-    inter = b,
-    error = e
-  ))
+.match_dates <- function(x.dte, y.dte){
+  sapply(x.dte, function(xnm, ynm)
+    which(ynm == xnm), ynm = x.dte)
 }

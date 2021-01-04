@@ -1,4 +1,4 @@
-#' @title Obtains the coarse version of a fine-scale image
+#' @title Obtains the coarse version of a fine-scale image (parallel version)
 #' 
 #' @description Aggregates to the coarse resolution, applies a Gaussian kernel
 #' as a representation of the point spread function , and applies a
@@ -14,17 +14,19 @@
 #' @param inter a (list of) \code{RasterStack} of intercepts for the radiometric correction
 #' @param blurr whether to apply the Gaussian kernel. Default \code{TRUE}
 #' @param radcor whether to apply the radiometric correction. Default \code{FALSE}
+#' @param ncores number of cores to process in parallel
 #' @param verbose whether to print the processing steps. Default \code{FALSE}
 #' 
 #' @returns a (list of) \code{RasterStack} with the coarse-scale version of \code{fimg}
 #' 
-get_coarse <- function(fimg,
-                       tmpl,
-                       slope = NULL,
-                       inter = NULL,
-                       blurr = TRUE,
-                       radcor = FALSE,
-                       verbose = FALSE){
+get_coarse_par <- function(fimg,
+                           tmpl,
+                           slope = NULL,
+                           inter = NULL,
+                           blurr = TRUE,
+                           radcor = FALSE,
+                           ncores = 1,
+                           verbose = FALSE){
   
   # Check inputs
   # ============
@@ -48,7 +50,7 @@ get_coarse <- function(fimg,
     tmpl <- list(tmpl)
   }
   # checks for rad. cor.
-  rad.cor <- !is.null(slope)&!is.null(inter)&radcor == TRUE
+  rad.cor <- !is.null(slope)&!is.null(inter)
   if(rad.cor && verbose){
     if(length(slope) != nimg | length(inter) != nimg)
       message("slope and inter must be the same length as fimg")
@@ -57,8 +59,9 @@ get_coarse <- function(fimg,
   
   # Processing:
   # ===========
-  out <- list()
-  for(i in 1:nimg){
+  clustr <- makeCluster(ncores)
+  doParallel::registerDoParallel(clustr)
+  out <- foreach(i = 1:nimg, .packages = c("raster", "stfusion")) %dopar% {
     # Select image
     if(verbose) message(paste0("processing image ", i))
     fimgi <- fimg[[i]]
@@ -71,11 +74,11 @@ get_coarse <- function(fimg,
     if(blurr) chati[] <- apply_blur(as.matrix(chati[]), dim(chati), 1)
     # Radiometric correction
     if(rad.cor) chati <- slope[[i]] * chati + inter[[i]]
-    # Save
-    out[[i]] <- chati
-  
+    # return
+    chati
   }
-
+  parallel::stopCluster(clustr)
+  
   # return
   names(out) <- imnm
   if(!is.img.series) out <- unlist(out)

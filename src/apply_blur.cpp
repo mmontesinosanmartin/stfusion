@@ -3,7 +3,6 @@
 #include "POOL.h"
 using namespace Rcpp;
 
-// [[Rcpp::export]]
 arma::vec gaussian_kernel(arma::vec x, arma::vec y, double sigma) {
   const double pi = 3.14159265358979323846;
   arma::vec dist = (pow(x, 2) + pow(y, 2));
@@ -12,7 +11,6 @@ arma::vec gaussian_kernel(arma::vec x, arma::vec y, double sigma) {
   return ker;
 }
 
-// [[Rcpp::export]]
 arma::vec gaussian_filter(int i, arma::uvec& inds, int nrow, int ncol, double sigma){
   // reference row/col
   int row = floor(i / ncol);
@@ -28,30 +26,17 @@ arma::vec gaussian_filter(int i, arma::uvec& inds, int nrow, int ncol, double si
   return filt;
 }
 
-// [[Rcpp::export]]
-arma::mat unsharp_masking(arma::mat& r, arma::uvec& rdims, double w) {
-  // initialize output
-  int npx = r.n_rows;
-  int nbd = r.n_cols;
-  arma::mat out(npx, nbd);
-  // inner parameters
-  int nrow = rdims(0);
-  int ncol = rdims(1);
-  // for each pixel
-  for(int i = 0; i < npx; i++) {
-    // int i = 0;
-    // neighbors
-    arma::uvec ngbs = get_ngbs(i, 1, nrow, ncol);
-    arma::mat  rngb = r.rows(ngbs);
-    // get the filter
-    arma::uvec cnt = find(ngbs == i);
-    rngb.shed_row(cnt[0]);
-    // apply filter
-    out.row(i) = r.row(i) + w * (r.row(i) - mean(rngb, 0));
-  }
-  return out;
-}
-
+//' @title Blurs an image
+//' 
+//' @description blurs an image using a Gaussian kernel, which is a usual
+//' way to describe the point spread function
+//' 
+//' @param r a matrix with pixel by bands dimensions
+//' @param rdims a vector specifying the dimensions of the image
+//' @param sigma standard deviation of the Gaussian kernel, usually equal to 1
+//' 
+//' @retruns a blurred image as a matrix
+//' 
 // [[Rcpp::export]]
 arma::mat apply_blur(arma::mat& r, arma::uvec& rdims, double sigma) {
   // initialize output
@@ -73,3 +58,4 @@ arma::mat apply_blur(arma::mat& r, arma::uvec& rdims, double sigma) {
   }
   return out;
 }
+

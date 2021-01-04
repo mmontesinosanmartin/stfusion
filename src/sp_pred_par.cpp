@@ -20,7 +20,7 @@ arma::mat sp_pred_par(arma::mat ref,
   int npx = size(indx)[0];
   int nbd = ref.n_cols;
   arma::mat out(npx, nbd);
-  
+
   // parameters
   int nrows = dims(0);
   int ncols = dims(1);
@@ -30,7 +30,6 @@ arma::mat sp_pred_par(arma::mat ref,
   for(int i = 0; i < npx; i++) {
     // stop if needed
     Rcpp::checkUserInterrupt();
-    
     // current row-col
     int cll = indx[i];
     int row = floor(cll / ncols);
@@ -69,6 +68,6 @@ arma::mat sp_pred_par(arma::mat ref,
     arma::rowvec  pred = sum(ibst.each_col() % wgts, 0);
     out.row(i) = pred;
   }
-  // result
+  //result
   return out;
 }
