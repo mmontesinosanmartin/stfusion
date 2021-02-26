@@ -6,19 +6,6 @@
 
 using namespace Rcpp;
 
-// apply_blur
-arma::mat apply_blur(arma::mat& r, arma::uvec& rdims, double sigma);
-RcppExport SEXP _stfusion_apply_blur(SEXP rSEXP, SEXP rdimsSEXP, SEXP sigmaSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat& >::type r(rSEXP);
-    Rcpp::traits::input_parameter< arma::uvec& >::type rdims(rdimsSEXP);
-    Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP);
-    rcpp_result_gen = Rcpp::wrap(apply_blur(r, rdims, sigma));
-    return rcpp_result_gen;
-END_RCPP
-}
 // complete_obs
 arma::uvec complete_obs(arma::mat m, int dimn);
 RcppExport SEXP _stfusion_complete_obs(SEXP mSEXP, SEXP dimnSEXP) {
@@ -74,6 +61,59 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// radio_par
+arma::mat radio_par(arma::mat x, arma::mat y, arma::uvec dims, int w);
+RcppExport SEXP _stfusion_radio_par(SEXP xSEXP, SEXP ySEXP, SEXP dimsSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type y(ySEXP);
+    Rcpp::traits::input_parameter< arma::uvec >::type dims(dimsSEXP);
+    Rcpp::traits::input_parameter< int >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(radio_par(x, y, dims, w));
+    return rcpp_result_gen;
+END_RCPP
+}
+// apply_blur
+arma::mat apply_blur(arma::mat& r, arma::uvec& rdims, double sigma);
+RcppExport SEXP _stfusion_apply_blur(SEXP rSEXP, SEXP rdimsSEXP, SEXP sigmaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type r(rSEXP);
+    Rcpp::traits::input_parameter< arma::uvec& >::type rdims(rdimsSEXP);
+    Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP);
+    rcpp_result_gen = Rcpp::wrap(apply_blur(r, rdims, sigma));
+    return rcpp_result_gen;
+END_RCPP
+}
+// composite_genr
+arma::vec composite_genr(arma::mat& x, arma::uvec& n);
+RcppExport SEXP _stfusion_composite_genr(SEXP xSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::uvec& >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(composite_genr(x, n));
+    return rcpp_result_gen;
+END_RCPP
+}
+// composite_lois
+arma::uvec composite_lois(arma::mat& x, arma::vec& y, arma::ivec& cdims, int w);
+RcppExport SEXP _stfusion_composite_lois(SEXP xSEXP, SEXP ySEXP, SEXP cdimsSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< arma::ivec& >::type cdims(cdimsSEXP);
+    Rcpp::traits::input_parameter< int >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(composite_lois(x, y, cdims, w));
+    return rcpp_result_gen;
+END_RCPP
+}
 // filter_sin
 int filter_sin(arma::mat x, arma::vec y);
 RcppExport SEXP _stfusion_filter_sin(SEXP xSEXP, SEXP ySEXP) {
@@ -83,34 +123,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type y(ySEXP);
     rcpp_result_gen = Rcpp::wrap(filter_sin(x, y));
-    return rcpp_result_gen;
-END_RCPP
-}
-// local_regression
-arma::mat local_regression(arma::mat& x, arma::mat& y, arma::ivec& cdims, int w);
-RcppExport SEXP _stfusion_local_regression(SEXP xSEXP, SEXP ySEXP, SEXP cdimsSEXP, SEXP wSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::mat& >::type y(ySEXP);
-    Rcpp::traits::input_parameter< arma::ivec& >::type cdims(cdimsSEXP);
-    Rcpp::traits::input_parameter< int >::type w(wSEXP);
-    rcpp_result_gen = Rcpp::wrap(local_regression(x, y, cdims, w));
-    return rcpp_result_gen;
-END_RCPP
-}
-// corr_composite
-arma::uvec corr_composite(arma::mat& x, arma::vec& y, arma::ivec& cdims, int w);
-RcppExport SEXP _stfusion_corr_composite(SEXP xSEXP, SEXP ySEXP, SEXP cdimsSEXP, SEXP wSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::vec& >::type y(ySEXP);
-    Rcpp::traits::input_parameter< arma::ivec& >::type cdims(cdimsSEXP);
-    Rcpp::traits::input_parameter< int >::type w(wSEXP);
-    rcpp_result_gen = Rcpp::wrap(corr_composite(x, y, cdims, w));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -129,75 +141,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// composite
-arma::vec composite(arma::mat& x, arma::uvec& n);
-RcppExport SEXP _stfusion_composite(SEXP xSEXP, SEXP nSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::uvec& >::type n(nSEXP);
-    rcpp_result_gen = Rcpp::wrap(composite(x, n));
-    return rcpp_result_gen;
-END_RCPP
-}
-// radio_par
-arma::mat radio_par(arma::mat x, arma::mat y, arma::uvec dims, int w);
-RcppExport SEXP _stfusion_radio_par(SEXP xSEXP, SEXP ySEXP, SEXP dimsSEXP, SEXP wSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type y(ySEXP);
-    Rcpp::traits::input_parameter< arma::uvec >::type dims(dimsSEXP);
-    Rcpp::traits::input_parameter< int >::type w(wSEXP);
-    rcpp_result_gen = Rcpp::wrap(radio_par(x, y, dims, w));
-    return rcpp_result_gen;
-END_RCPP
-}
-// sequence
-arma::uvec sequence(int n);
-RcppExport SEXP _stfusion_sequence(SEXP nSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
-    rcpp_result_gen = Rcpp::wrap(sequence(n));
-    return rcpp_result_gen;
-END_RCPP
-}
-// sp_pred
-arma::mat sp_pred(arma::mat ref, arma::mat img, arma::uvec dims, int w, int nng, double spwgt);
-RcppExport SEXP _stfusion_sp_pred(SEXP refSEXP, SEXP imgSEXP, SEXP dimsSEXP, SEXP wSEXP, SEXP nngSEXP, SEXP spwgtSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type ref(refSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type img(imgSEXP);
-    Rcpp::traits::input_parameter< arma::uvec >::type dims(dimsSEXP);
-    Rcpp::traits::input_parameter< int >::type w(wSEXP);
-    Rcpp::traits::input_parameter< int >::type nng(nngSEXP);
-    Rcpp::traits::input_parameter< double >::type spwgt(spwgtSEXP);
-    rcpp_result_gen = Rcpp::wrap(sp_pred(ref, img, dims, w, nng, spwgt));
-    return rcpp_result_gen;
-END_RCPP
-}
-// vclamp
-arma::vec vclamp(arma::vec x, double minx, double maxx);
-RcppExport SEXP _stfusion_vclamp(SEXP xSEXP, SEXP minxSEXP, SEXP maxxSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
-    Rcpp::traits::input_parameter< double >::type minx(minxSEXP);
-    Rcpp::traits::input_parameter< double >::type maxx(maxxSEXP);
-    rcpp_result_gen = Rcpp::wrap(vclamp(x, minx, maxx));
-    return rcpp_result_gen;
-END_RCPP
-}
-// sp_pred_par
-arma::mat sp_pred_par(arma::mat ref, arma::mat img, arma::uvec dims, arma::uvec indx, int w, int nng, double spwgt);
-RcppExport SEXP _stfusion_sp_pred_par(SEXP refSEXP, SEXP imgSEXP, SEXP dimsSEXP, SEXP indxSEXP, SEXP wSEXP, SEXP nngSEXP, SEXP spwgtSEXP) {
+// spatial_filtering_par
+arma::mat spatial_filtering_par(arma::mat ref, arma::mat img, arma::uvec dims, arma::uvec indx, int w, int nng, double spwgt);
+RcppExport SEXP _stfusion_spatial_filtering_par(SEXP refSEXP, SEXP imgSEXP, SEXP dimsSEXP, SEXP indxSEXP, SEXP wSEXP, SEXP nngSEXP, SEXP spwgtSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -208,27 +154,23 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type w(wSEXP);
     Rcpp::traits::input_parameter< int >::type nng(nngSEXP);
     Rcpp::traits::input_parameter< double >::type spwgt(spwgtSEXP);
-    rcpp_result_gen = Rcpp::wrap(sp_pred_par(ref, img, dims, indx, w, nng, spwgt));
+    rcpp_result_gen = Rcpp::wrap(spatial_filtering_par(ref, img, dims, indx, w, nng, spwgt));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_stfusion_apply_blur", (DL_FUNC) &_stfusion_apply_blur, 3},
     {"_stfusion_complete_obs", (DL_FUNC) &_stfusion_complete_obs, 2},
     {"_stfusion_cpp_rmse", (DL_FUNC) &_stfusion_cpp_rmse, 3},
     {"_stfusion_spatial_filtering", (DL_FUNC) &_stfusion_spatial_filtering, 6},
     {"_stfusion_get_ngbs", (DL_FUNC) &_stfusion_get_ngbs, 4},
-    {"_stfusion_filter_sin", (DL_FUNC) &_stfusion_filter_sin, 2},
-    {"_stfusion_local_regression", (DL_FUNC) &_stfusion_local_regression, 4},
-    {"_stfusion_corr_composite", (DL_FUNC) &_stfusion_corr_composite, 4},
-    {"_stfusion_local_lm", (DL_FUNC) &_stfusion_local_lm, 5},
-    {"_stfusion_composite", (DL_FUNC) &_stfusion_composite, 2},
     {"_stfusion_radio_par", (DL_FUNC) &_stfusion_radio_par, 4},
-    {"_stfusion_sequence", (DL_FUNC) &_stfusion_sequence, 1},
-    {"_stfusion_sp_pred", (DL_FUNC) &_stfusion_sp_pred, 6},
-    {"_stfusion_vclamp", (DL_FUNC) &_stfusion_vclamp, 3},
-    {"_stfusion_sp_pred_par", (DL_FUNC) &_stfusion_sp_pred_par, 7},
+    {"_stfusion_apply_blur", (DL_FUNC) &_stfusion_apply_blur, 3},
+    {"_stfusion_composite_genr", (DL_FUNC) &_stfusion_composite_genr, 2},
+    {"_stfusion_composite_lois", (DL_FUNC) &_stfusion_composite_lois, 4},
+    {"_stfusion_filter_sin", (DL_FUNC) &_stfusion_filter_sin, 2},
+    {"_stfusion_local_lm", (DL_FUNC) &_stfusion_local_lm, 5},
+    {"_stfusion_spatial_filtering_par", (DL_FUNC) &_stfusion_spatial_filtering_par, 7},
     {NULL, NULL, 0}
 };
 

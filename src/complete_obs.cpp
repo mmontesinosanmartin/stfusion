@@ -2,14 +2,6 @@
 #include <RcppArmadillo.h>
 using namespace Rcpp;
 
-//' @title Finds rows/columns without NAs
-//' 
-//' @description provides the index for the rows and columns without any
-//' missing value
-//' 
-//' @param m a dataset, as a matrix
-//' @param dimn can be 0 or 1 to find NAs across rows and columns respectively
-//'  
 // [[Rcpp::export]]
 arma::uvec complete_obs(arma::mat m, int dimn){
   

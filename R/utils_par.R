@@ -10,7 +10,7 @@
   clspl2 <- rep(cols, n)
   
   quadr <- cbind(rwspl1, rwspl2, clspl1, clspl2)
-  quadr[,1:2] <- apply(quadr[,1:2, drop = FALSE], 2, vclamp, 1, rows)
+  quadr[,1:2] <- apply(quadr[,1:2, drop = FALSE], 2, clamp, 1, rows)
   
   return(quadr)
 }
@@ -24,7 +24,7 @@
   
   chunks[,mins] <- chunks[,mins] - w
   chunks[,maxs] <- chunks[,maxs] + w
-  chunks <- lapply(1:4, function(i) vclamp(chunks[,i], 1, dims[i]))
+  chunks <- lapply(1:4, function(i) clamp(chunks[,i], 1, dims[i]))
   chunks <- do.call(cbind, chunks)
   colnames(chunks) <- nmes
   
@@ -32,7 +32,7 @@
   
 }
 
-.sp_pred_par <- function(x, y, ftm, nly, w, nsim, spwgt, n = 1){
+.spatial_filtering_par <- function(x, y, ftm, nly, w, nsim, spwgt, n = 1){
   
   .chunk_to_cells <- function(chnki, chnkwi, cpp = TRUE){
     
@@ -63,7 +63,7 @@
                      x.chnk <- crop(x, extent(x,chunkw[i,1],chunkw[i,2],chunkw[i,3],chunkw[i,4]))
                      y.chnk <- crop(y, extent(y,chunkw[i,1],chunkw[i,2],chunkw[i,3],chunkw[i,4]))
                      i.chnk <- .chunk_to_cells(chunks[i,], chunkw[i,])
-                     res <- sp_pred_par(x.chnk[], y.chnk[], dim(x.chnk), i.chnk, w, nsim, spwgt)
+                     res <- spatial_filtering_par(x.chnk[], y.chnk[], dim(x.chnk), i.chnk, w, nsim, spwgt)
                      rm(x.chnk, y.chnk, i.chnk)
                      gc()
                      return(res)

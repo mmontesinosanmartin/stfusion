@@ -8,9 +8,9 @@ arma::uvec get_ngbs(int i, int w, int nrow, int ncol);
 arma::uvec complete_obs(arma::mat m, int dimn);
 
 #include <RcppArmadillo.h>
-arma::uvec sequence(int n);
+int filter_sin(arma::mat x, arma::vec y);
 
 #include <RcppArmadillo.h>
-int filter_sin(arma::mat x, arma::vec y);
+int filter_cor(arma::mat x, arma::vec y);
 
 #endif

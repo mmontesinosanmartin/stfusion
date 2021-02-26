@@ -1,20 +1,22 @@
-#' Applies the Fit-FC spatiotemporal data fusion model
+#' @title Applies the Fit-FC spatiotemporal image fusion model
 #'
-#' Predicts the fine image at a time t2 based on a fine image from a previous
-#' moment time t1 and two coarse images, from t1 and t2
+#' @description Predicts the fine image at a time \eqn{t_2} based on a fine
+#' image from a previous moment time \eqn{t_1} and two coarse images, from
+#' \eqn{t_1} and \eqn{t_2}.
 #' 
 #' Applies the Fit-FC method as described in Wang and Atkinson (2018).
-#' In the same study, authors set the Fit-FC model to \code{r=15} and 
-#' \code{nsim=30} to downscale Sentinel-3 images (300x300m) to Sentinel-2
-#' resolution (10x10m).
+#' In the same study, the parameters of the Fit-FC model are set to
+#' \code{sngb.lr = 5}, \code{sngb.wg=15}, and \code{nsim=30} to downscale
+#' from Sentinel-3 images (300x300m) to Sentinel-2 (10x10m).
 #' 
-#' @param f1 fine image from t1 as a \code{RasterStack}
-#' @param c1 coarse image from t1 as a \code{RasterStack}
-#' @param c2 coarse image from t2 as a \code{RasterStack}
+#' @param f1 a fine image from t1 as a \code{RasterStack}
+#' @param c1 a coarse image from t1 as a \code{RasterStack}
+#' @param c2 a coarse image from t2 as a \code{RasterStack}
 #' @param sngb.lr number that defines the radius of the neighborhood
+#' @param sngb.wg number of neighboring pixels for the residual compensation
 #' @param nsim number of similar pixels in each neighborhood
-#' @param spw number with the weight of the spatial dependence 
 #' @param scale the dynamic range of the image (default, \code{c(0,1)}
+#' @param verbose whether to notify intermediate steps (default, \code{TRUE)}
 #' 
 #' @return the fine image predicted at t2 as a \code{RasterStack}
 #' 
@@ -22,16 +24,14 @@
 #' Spatio-temporal fusion for daily Sentinel-2 images.
 #' Remote Sensing of Environment, 204, 31-42.
 #' 
-#' @example
-#' 
-#' 
 stif_fitfc <- function(f1,
-                   c1,
-                   c2,
-                   sngb.lr,
-                   sngb.wg,
-                   nsim,
-                   scale = c(0,1)) {
+                       c1,
+                       c2,
+                       sngb.lr,
+                       sngb.wg,
+                       nsim,
+                       scale = c(0,1),
+                       verbose = TRUE) {
   # coarse info
   # n x m number of pixels
   # no. of layers
@@ -50,13 +50,13 @@ stif_fitfc <- function(f1,
   a <- regressions$slope
   b <- regressions$inter
   e <- regressions$error
-  print("linear regression completed")
+  if(verbose == TRUE) message("linear regression completed")
   
   # step 2: residual compensation
   # predictions
   f2.hat <- .pixel_predicton(f1, a, b, e)
   names(f2.hat) <- names(c2)
-  print("residual compensation completed")
+  if(verbose == TRUE) message("residual compensation completed")
   
   # step 3: spatial filtering
   # parameters
@@ -75,6 +75,7 @@ stif_fitfc <- function(f1,
   
   # spatial filtering
   out.v <- spatial_filtering(f1.mat, f2.mat, dim(f1)[1:2], r.r, ngb.wgt, nsim)
+  if(verbose == TRUE) message("spatial filtering completed")
   
   # saving results
   f2.pred<- stack(f2.hat)

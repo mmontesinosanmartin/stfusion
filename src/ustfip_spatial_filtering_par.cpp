@@ -3,18 +3,13 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-arma::vec vclamp(arma::vec x, double minx, double maxx){
-  return clamp(x, minx, maxx);
-}
-
-// [[Rcpp::export]]
-arma::mat sp_pred_par(arma::mat ref,
-                      arma::mat img,
-                      arma::uvec dims,
-                      arma::uvec indx,
-                      int w,
-                      int nng,
-                      double spwgt) {
+arma::mat spatial_filtering_par(arma::mat ref,
+                                arma::mat img,
+                                arma::uvec dims,
+                                arma::uvec indx,
+                                int w,
+                                int nng,
+                                double spwgt) {
   
   // initialize
   int npx = size(indx)[0];

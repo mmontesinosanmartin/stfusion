@@ -26,17 +26,6 @@ arma::vec gaussian_filter(int i, arma::uvec& inds, int nrow, int ncol, double si
   return filt;
 }
 
-//' @title Blurs an image
-//' 
-//' @description blurs an image using a Gaussian kernel, which is a usual
-//' way to describe the point spread function
-//' 
-//' @param r a matrix with pixel by bands dimensions
-//' @param rdims a vector specifying the dimensions of the image
-//' @param sigma standard deviation of the Gaussian kernel, usually equal to 1
-//' 
-//' @retruns a blurred image as a matrix
-//' 
 // [[Rcpp::export]]
 arma::mat apply_blur(arma::mat& r, arma::uvec& rdims, double sigma) {
   // initialize output
