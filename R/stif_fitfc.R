@@ -78,7 +78,7 @@ stif_fitfc <- function(f1,
   if(verbose == TRUE) message("spatial filtering completed")
   
   # saving results
-  f2.pred<- stack(f2.hat)
+  f2.pred <- stack(f2.hat)
   f2.pred[] <- out.v
   names(f2.pred) <- names(f2.hat)
   f2.pred <- clamp(f2.pred, lower = min(scale), upper = max(scale))

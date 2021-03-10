@@ -114,6 +114,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// filter_cor
+int filter_cor(arma::mat x, arma::vec y);
+RcppExport SEXP _stfusion_filter_cor(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(filter_cor(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
 // filter_sin
 int filter_sin(arma::mat x, arma::vec y);
 RcppExport SEXP _stfusion_filter_sin(SEXP xSEXP, SEXP ySEXP) {
@@ -168,6 +180,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_stfusion_apply_blur", (DL_FUNC) &_stfusion_apply_blur, 3},
     {"_stfusion_composite_genr", (DL_FUNC) &_stfusion_composite_genr, 2},
     {"_stfusion_composite_lois", (DL_FUNC) &_stfusion_composite_lois, 4},
+    {"_stfusion_filter_cor", (DL_FUNC) &_stfusion_filter_cor, 2},
     {"_stfusion_filter_sin", (DL_FUNC) &_stfusion_filter_sin, 2},
     {"_stfusion_local_lm", (DL_FUNC) &_stfusion_local_lm, 5},
     {"_stfusion_spatial_filtering_par", (DL_FUNC) &_stfusion_spatial_filtering_par, 7},

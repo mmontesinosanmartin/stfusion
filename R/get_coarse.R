@@ -1,14 +1,16 @@
 #' @title Obtains the coarse version of a fine-scale image
 #' 
-#' @description Aggregates to the coarse resolution, applies a Gaussian kernel
-#' as a representation of the point spread function , and applies a
-#' linear model to radiometrically correct the images.
+#' @description The coarse resolution image results from; (1) the spatial
+#' aggregation of the fine-scale image to the coarse resolution (average),
+#' (2) the application of a Gaussian kernel representing the point spread
+#' function, and (3) the application of radiometric corrections through the
+#' linear model method (optional).
 #' 
-#' @details The slope and intercept for the radiometric corrections must have the
-#' same spatial resolution as the coarse template and the same number of 
-#' bands as the multi-band fine scale image.
+#' @details The slope (\code{slope}) and intercept (\code{inter}) for the
+#' radiometric correction must have the same spatial resolution as the coarse
+#' template and the same number of bands as the multispectral fine scale image.
 #' 
-#' @param fimg  a (list of) \code{RasterStack} of the multi-band fine-scale image(s)
+#' @param fimg  a (list of) \code{RasterStack} of the multispectral fine-scale image(s)
 #' @param tmpl  a (list of) \code{RasterLayer} of template of the coarse-scale image
 #' @param slope a (list of) \code{RasterStack} of slopes for the radiometric correction
 #' @param inter a (list of) \code{RasterStack} of intercepts for the radiometric correction
@@ -34,12 +36,12 @@ get_coarse <- function(fimg,
     nimg <- length(fimg)
     imnm <- names(fimg)
     nlyr <- nlayers(fimg[[1]])
-    fimg <- fimg
+    fimgs <- fimg
   } else {
     nimg <- 1
     imnm <- NULL
     nlyr <- nlayers(fimg)
-    imgs <- list(); imgs[[1]] <- fimg
+    fimgs <- list(); fimgs[[1]] <- fimg
   }
   # check templates
   is.tmp.series <- is.list(tmpl)
@@ -61,7 +63,8 @@ get_coarse <- function(fimg,
   for(i in 1:nimg){
     # Select image
     if(verbose) message(paste0("processing image ", i))
-    fimgi <- fimg[[i]]
+    # fimgi <- fimgs[[i]]
+    fimgi <- disaggregate(fimgs[[i]], 2, method = "")
     tmpli <- tmpl[[ifelse(is.tmp.series, i, 1)]]
     # Aggregation
     fimgi[is.na(fimgi)] <- Inf
@@ -73,7 +76,6 @@ get_coarse <- function(fimg,
     if(rad.cor) chati <- slope[[i]] * chati + inter[[i]]
     # Save
     out[[i]] <- chati
-  
   }
 
   # return

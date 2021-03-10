@@ -14,6 +14,7 @@ arma::mat local_lm(arma::mat& x,
   int ntm = x.n_cols;
   int ncl = ntm + 1;
   arma::mat out(npx, ncl);
+  out.fill(arma::datum::nan);
   // inner parameters
   int nrow = cdims(0);
   int ncol = cdims(1);
@@ -24,15 +25,19 @@ arma::mat local_lm(arma::mat& x,
     // regression data
     arma::mat yng = y.rows(inds);
     arma::mat xng = x.rows(inds);
-    arma::vec kns = arma::ones(xng.n_rows);
-    // coefficients
-    arma::mat xinp = join_horiz(xng.col(n(i)), kns);
-    arma::vec coef = arma::solve(xinp, yng);
-    // saving
-    arma::vec outi = arma::zeros(ncl);
-    outi(n(i)) = coef[0];
-    outi(ncl - 1) = coef[1];
-    out.row(i) = outi.as_row();
+    arma::vec xin = xng.col(n(i));
+    // when available
+    if(xin.is_finite()){
+      arma::vec kns = arma::ones(xin.n_rows);
+      // coefficients
+      arma::mat xinp = join_horiz(xin, kns);
+      arma::vec coef = arma::solve(xinp, yng);
+      // saving
+      arma::vec outi = arma::zeros(ncl);
+      outi(n(i)) = coef[0];
+      outi(ncl - 1) = coef[1];
+      out.row(i) = outi.as_row();
+    }
   }
   // return result
   return out;

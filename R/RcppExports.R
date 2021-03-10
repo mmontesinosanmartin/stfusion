@@ -50,6 +50,10 @@ composite_lois <- function(x, y, cdims, w) {
     .Call(`_stfusion_composite_lois`, x, y, cdims, w)
 }
 
+filter_cor <- function(x, y) {
+    .Call(`_stfusion_filter_cor`, x, y)
+}
+
 filter_sin <- function(x, y) {
     .Call(`_stfusion_filter_sin`, x, y)
 }

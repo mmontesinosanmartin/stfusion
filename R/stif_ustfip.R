@@ -30,11 +30,10 @@ stif_ustfip <- function(f.ts,
                         ncores = 1,
                         verbose = TRUE){
 
-  # basic info.
-  # fine
+  # basic info.:fine
   fnm <- dim(f.ts[[1]])[1:2]; ntm <- length(f.ts)
   ftm <- raster(f.ts[[1]]); ftm[] <- NA
-  # coarse
+  # basic info.:coarse
   cnm <- dim(c.tk)[1:2]; nly <- dim(c.tk)[3]
   ctm <- raster(c.tk); ctm[] <- NA
     
@@ -43,7 +42,6 @@ stif_ustfip <- function(f.ts,
   c.ts <- stfusion:::.img_rearrange(c.ts)
   f.ts <- stfusion:::.img_rearrange(f.ts)
   if(verbose == TRUE) message("conformation completed")
-  
   
   # step 2: linear regression (parallel)
   # parameters
@@ -77,6 +75,12 @@ stif_ustfip <- function(f.ts,
     f.hat <- calc(resample(coeff, ftm, "ngb") * stack(f.ts[[i]], fones),
                   sum, na.rm = TRUE)
     
+    # edge cases
+    b.msk <- setValues(ctm, apply(coeff[],1,function(x){
+      ifelse(all(is.na(x)),NA,1)}))
+    c.hat <- c.hat * b.msk
+    f.hat <- f.hat * resample(b.msk, ftm, "ngb")
+    
     # saving
     out <- list(c.hat[], f.hat[], f.ref[])
     rm(x.mat, y.mat, fones, cones,
@@ -90,9 +94,9 @@ stif_ustfip <- function(f.ts,
   parallel::stopCluster(clustr) 
   
   # collect
-  c.virt <- stfusion:::.collect_parallel(tmp, 1, ctm, nly)
-  f.virt <- stfusion:::.collect_parallel(tmp, 1, ctm, nly)
-  f.reff <- stfusion:::.collect_parallel(tmp, 1, ctm, nly)
+  c.virt <- .collect_parallel(tmp, 1, ctm, nly)
+  f.virt <- .collect_parallel(tmp, 2, ftm, nly)
+  f.reff <- .collect_parallel(tmp, 3, ftm, nly)
   if(verbose == TRUE) message("linear regression completed")
   
   # residual compensation
@@ -101,13 +105,11 @@ stif_ustfip <- function(f.ts,
   f2.raw <- f.virt + delta.f
   
   # spatial weighting
-  f2.pred <- stfusion:::.spatial_filtering_par(f.reff,
-                                               f2.raw,
-                                               ftm, nly,
-                                               sngb.wg,
-                                               nsim,
-                                               spwgt,
-                                               n = ncores) 
+  f2.raw <- trim(f2.raw)
+  f.reff <- crop(f.reff, f2.raw)
+  f2.pred <- stfusion:::.spatial_filtering_par(f.reff, f2.raw,
+                                               raster(f.reff), nly, sngb.wg,
+                                               nsim, spwgt, n = ncores) 
   
   # saving results
   names(f2.pred) <- names(c.tk)
@@ -139,6 +141,6 @@ stif_ustfip <- function(f.ts,
 # Helper: collect results from parallel execution
 .collect_parallel <- function(tmp, i, tmpl, nly){
   out <- stfusion:::.gen_tmp(tmpl, nly)
-  out <- do.call(cbind,lapply(tmp, function(x)x[[i]]))
+  out[] <- do.call(cbind,lapply(tmp, function(x)x[[i]]))
   return(out)
 }

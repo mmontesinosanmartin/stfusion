@@ -23,6 +23,7 @@ apply_radiocor <- function(x, y, wndw = 2, pars = FALSE, verbose = FALSE){
   # matching pairs
   x.mtch <- .match_dates(names(x), names(y))
   y.mtch <- .match_dates(names(y), names(x))
+  ndys <- length(x.mtch)
   x.mtch <- x[x.mtch]
   y.mtch <- y[y.mtch]
   
@@ -40,12 +41,14 @@ apply_radiocor <- function(x, y, wndw = 2, pars = FALSE, verbose = FALSE){
   inter <- stfusion:::.gen_tmp(raster(x.mtch[[1]]), nlyr)
   if(verbose) message("estimating correction parameters...")
   for(i in 1:nlyr){
-    if(verbose) message("layer ", i, " is now being processed")
-    x.mat <- as.matrix(x.mtch[[i]][])
-    y.mat <- as.matrix(y.mtch[[i]][])
-    coefs <- radio_par(x.mat, y.mat, dims, wndw)
-    slope[[i]][] <- coefs[,1]
-    inter[[i]][] <- coefs[,2]
+    # if(verbose) message("layer ", i, " is now being processed")
+    # for(j in 1:ndys){
+      x.mat <- as.matrix(x.mtch[[i]][])
+      y.mat <- as.matrix(y.mtch[[i]][])
+      coefs <- radio_par(x.mat, y.mat, dims, wndw)
+      slope[[i]][] <- coefs[,1]
+      inter[[i]][] <- coefs[,2]
+    # }
   }
   
   # correction
@@ -65,6 +68,9 @@ apply_radiocor <- function(x, y, wndw = 2, pars = FALSE, verbose = FALSE){
 }
 
 .match_dates <- function(x.dte, y.dte){
-  sapply(x.dte, function(xnm, ynm)
-    which(ynm == xnm), ynm = x.dte)
+  # sapply(x.dte, function(xnm, ynm)
+  #   which(xnm == ynm), ynm = x.dte)
+  names(x.dte) <- x.dte
+  out <- x.dte[y.dte]
+  as.vector(out[!is.na(out)])
 }
