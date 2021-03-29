@@ -75,6 +75,24 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// starfm_spatial_filter
+arma::mat starfm_spatial_filter(arma::mat& c1, arma::mat& c2, arma::mat& f1, arma::uvec dims, unsigned int redb, unsigned int nirb, int w, int ns);
+RcppExport SEXP _stfusion_starfm_spatial_filter(SEXP c1SEXP, SEXP c2SEXP, SEXP f1SEXP, SEXP dimsSEXP, SEXP redbSEXP, SEXP nirbSEXP, SEXP wSEXP, SEXP nsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type c1(c1SEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type c2(c2SEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type f1(f1SEXP);
+    Rcpp::traits::input_parameter< arma::uvec >::type dims(dimsSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type redb(redbSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type nirb(nirbSEXP);
+    Rcpp::traits::input_parameter< int >::type w(wSEXP);
+    Rcpp::traits::input_parameter< int >::type ns(nsSEXP);
+    rcpp_result_gen = Rcpp::wrap(starfm_spatial_filter(c1, c2, f1, dims, redb, nirb, w, ns));
+    return rcpp_result_gen;
+END_RCPP
+}
 // apply_blur
 arma::mat apply_blur(arma::mat& r, arma::uvec& rdims, double sigma);
 RcppExport SEXP _stfusion_apply_blur(SEXP rSEXP, SEXP rdimsSEXP, SEXP sigmaSEXP) {
@@ -177,6 +195,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_stfusion_spatial_filtering", (DL_FUNC) &_stfusion_spatial_filtering, 6},
     {"_stfusion_get_ngbs", (DL_FUNC) &_stfusion_get_ngbs, 4},
     {"_stfusion_radio_par", (DL_FUNC) &_stfusion_radio_par, 4},
+    {"_stfusion_starfm_spatial_filter", (DL_FUNC) &_stfusion_starfm_spatial_filter, 8},
     {"_stfusion_apply_blur", (DL_FUNC) &_stfusion_apply_blur, 3},
     {"_stfusion_composite_genr", (DL_FUNC) &_stfusion_composite_genr, 2},
     {"_stfusion_composite_lois", (DL_FUNC) &_stfusion_composite_lois, 4},

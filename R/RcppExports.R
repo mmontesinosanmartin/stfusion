@@ -38,6 +38,10 @@ radio_par <- function(x, y, dims, w) {
     .Call(`_stfusion_radio_par`, x, y, dims, w)
 }
 
+starfm_spatial_filter <- function(c1, c2, f1, dims, redb, nirb, w, ns) {
+    .Call(`_stfusion_starfm_spatial_filter`, c1, c2, f1, dims, redb, nirb, w, ns)
+}
+
 apply_blur <- function(r, rdims, sigma) {
     .Call(`_stfusion_apply_blur`, r, rdims, sigma)
 }
