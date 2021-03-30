@@ -63,8 +63,8 @@ get_coarse <- function(fimg,
   for(i in 1:nimg){
     # Select image
     if(verbose) message(paste0("processing image ", i))
-    # fimgi <- fimgs[[i]]
-    fimgi <- disaggregate(fimgs[[i]], 2, method = "")
+    fimgi <- fimgs[[i]]
+    # fimgi <- disaggregate(fimgs[[i]], 1, method = "")
     tmpli <- tmpl[[ifelse(is.tmp.series, i, 1)]]
     # Aggregation
     fimgi[is.na(fimgi)] <- Inf

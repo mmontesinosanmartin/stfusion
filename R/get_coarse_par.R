@@ -64,8 +64,8 @@ get_coarse_par <- function(fimg,
   out <- foreach(i = 1:nimg, .packages = c("raster", "stfusion")) %dopar% {
     # Select image
     if(verbose) message(paste0("processing image ", i))
-    # fimgi <- fimg[[i]]
-    fimgi <- disaggregate(fimg[[i]], 2, method = "")
+    fimgi <- fimg[[i]]
+    # fimgi <- disaggregate(fimg[[i]], 2, method = "")
     tmpli <- tmpl[[ifelse(is.tmp.series, i, 1)]]
     # Aggregation
     fimgi[is.na(fimgi)] <- Inf
