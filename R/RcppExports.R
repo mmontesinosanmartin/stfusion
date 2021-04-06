@@ -13,6 +13,26 @@ spatial_filtering <- function(f1, f2, fdims, w, wg, nsim) {
     .Call(`_stfusion_spatial_filtering`, f1, f2, fdims, w, wg, nsim)
 }
 
+get_fractures <- function(img, ctof, k) {
+    .Call(`_stfusion_get_fractures`, img, ctof, k)
+}
+
+get_heterogeneity <- function(clss, w, nrow, ncol) {
+    .Call(`_stfusion_get_heterogeneity`, clss, w, nrow, ncol)
+}
+
+classify_isodata <- function(img, K = 4L, I = 100L, P = 2L, maxStdv = 500, minDis = 500, minS = 200, M = 0.05, k = 4L) {
+    .Call(`_stfusion_classify_isodata`, img, K, I, P, maxStdv, minDis, minS, M, k)
+}
+
+get_dist <- function(ind, ref, w, nrows, ncols) {
+    .Call(`_stfusion_get_dist`, ind, ref, w, nrows, ncols)
+}
+
+fsdaf_spatial_filtering <- function(c1, c2, f1, delta, dims, w, nsim, nclass, minr, maxr) {
+    .Call(`_stfusion_fsdaf_spatial_filtering`, c1, c2, f1, delta, dims, w, nsim, nclass, minr, maxr)
+}
+
 get_ngbs <- function(i, w, nrow, ncol) {
     .Call(`_stfusion_get_ngbs`, i, w, nrow, ncol)
 }

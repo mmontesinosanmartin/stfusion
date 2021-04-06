@@ -19,13 +19,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_rmse
-arma::rowvec cpp_rmse(arma::mat x, arma::mat y, bool byband);
+arma::rowvec cpp_rmse(arma::mat& x, arma::mat& y, bool byband);
 RcppExport SEXP _stfusion_cpp_rmse(SEXP xSEXP, SEXP ySEXP, SEXP bybandSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type y(ySEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type y(ySEXP);
     Rcpp::traits::input_parameter< bool >::type byband(bybandSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rmse(x, y, byband));
     return rcpp_result_gen;
@@ -44,6 +44,87 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec& >::type wg(wgSEXP);
     Rcpp::traits::input_parameter< int& >::type nsim(nsimSEXP);
     rcpp_result_gen = Rcpp::wrap(spatial_filtering(f1, f2, fdims, w, wg, nsim));
+    return rcpp_result_gen;
+END_RCPP
+}
+// get_fractures
+arma::mat get_fractures(arma::uvec img, arma::uvec ctof, int k);
+RcppExport SEXP _stfusion_get_fractures(SEXP imgSEXP, SEXP ctofSEXP, SEXP kSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::uvec >::type img(imgSEXP);
+    Rcpp::traits::input_parameter< arma::uvec >::type ctof(ctofSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_fractures(img, ctof, k));
+    return rcpp_result_gen;
+END_RCPP
+}
+// get_heterogeneity
+arma::vec get_heterogeneity(arma::uvec clss, int w, int nrow, int ncol);
+RcppExport SEXP _stfusion_get_heterogeneity(SEXP clssSEXP, SEXP wSEXP, SEXP nrowSEXP, SEXP ncolSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::uvec >::type clss(clssSEXP);
+    Rcpp::traits::input_parameter< int >::type w(wSEXP);
+    Rcpp::traits::input_parameter< int >::type nrow(nrowSEXP);
+    Rcpp::traits::input_parameter< int >::type ncol(ncolSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_heterogeneity(clss, w, nrow, ncol));
+    return rcpp_result_gen;
+END_RCPP
+}
+// classify_isodata
+arma::uvec classify_isodata(arma::mat img, int K, int I, int P, double maxStdv, double minDis, double minS, double M, int k);
+RcppExport SEXP _stfusion_classify_isodata(SEXP imgSEXP, SEXP KSEXP, SEXP ISEXP, SEXP PSEXP, SEXP maxStdvSEXP, SEXP minDisSEXP, SEXP minSSEXP, SEXP MSEXP, SEXP kSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type img(imgSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< int >::type I(ISEXP);
+    Rcpp::traits::input_parameter< int >::type P(PSEXP);
+    Rcpp::traits::input_parameter< double >::type maxStdv(maxStdvSEXP);
+    Rcpp::traits::input_parameter< double >::type minDis(minDisSEXP);
+    Rcpp::traits::input_parameter< double >::type minS(minSSEXP);
+    Rcpp::traits::input_parameter< double >::type M(MSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    rcpp_result_gen = Rcpp::wrap(classify_isodata(img, K, I, P, maxStdv, minDis, minS, M, k));
+    return rcpp_result_gen;
+END_RCPP
+}
+// get_dist
+double get_dist(int ind, int ref, int w, int nrows, int ncols);
+RcppExport SEXP _stfusion_get_dist(SEXP indSEXP, SEXP refSEXP, SEXP wSEXP, SEXP nrowsSEXP, SEXP ncolsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type ind(indSEXP);
+    Rcpp::traits::input_parameter< int >::type ref(refSEXP);
+    Rcpp::traits::input_parameter< int >::type w(wSEXP);
+    Rcpp::traits::input_parameter< int >::type nrows(nrowsSEXP);
+    Rcpp::traits::input_parameter< int >::type ncols(ncolsSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_dist(ind, ref, w, nrows, ncols));
+    return rcpp_result_gen;
+END_RCPP
+}
+// fsdaf_spatial_filtering
+arma::mat fsdaf_spatial_filtering(arma::mat& c1, arma::mat& c2, arma::mat& f1, arma::mat& delta, arma::uvec dims, int w, int nsim, int nclass, double minr, double maxr);
+RcppExport SEXP _stfusion_fsdaf_spatial_filtering(SEXP c1SEXP, SEXP c2SEXP, SEXP f1SEXP, SEXP deltaSEXP, SEXP dimsSEXP, SEXP wSEXP, SEXP nsimSEXP, SEXP nclassSEXP, SEXP minrSEXP, SEXP maxrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type c1(c1SEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type c2(c2SEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type f1(f1SEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type delta(deltaSEXP);
+    Rcpp::traits::input_parameter< arma::uvec >::type dims(dimsSEXP);
+    Rcpp::traits::input_parameter< int >::type w(wSEXP);
+    Rcpp::traits::input_parameter< int >::type nsim(nsimSEXP);
+    Rcpp::traits::input_parameter< int >::type nclass(nclassSEXP);
+    Rcpp::traits::input_parameter< double >::type minr(minrSEXP);
+    Rcpp::traits::input_parameter< double >::type maxr(maxrSEXP);
+    rcpp_result_gen = Rcpp::wrap(fsdaf_spatial_filtering(c1, c2, f1, delta, dims, w, nsim, nclass, minr, maxr));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -193,6 +274,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"_stfusion_complete_obs", (DL_FUNC) &_stfusion_complete_obs, 2},
     {"_stfusion_cpp_rmse", (DL_FUNC) &_stfusion_cpp_rmse, 3},
     {"_stfusion_spatial_filtering", (DL_FUNC) &_stfusion_spatial_filtering, 6},
+    {"_stfusion_get_fractures", (DL_FUNC) &_stfusion_get_fractures, 3},
+    {"_stfusion_get_heterogeneity", (DL_FUNC) &_stfusion_get_heterogeneity, 4},
+    {"_stfusion_classify_isodata", (DL_FUNC) &_stfusion_classify_isodata, 9},
+    {"_stfusion_get_dist", (DL_FUNC) &_stfusion_get_dist, 5},
+    {"_stfusion_fsdaf_spatial_filtering", (DL_FUNC) &_stfusion_fsdaf_spatial_filtering, 10},
     {"_stfusion_get_ngbs", (DL_FUNC) &_stfusion_get_ngbs, 4},
     {"_stfusion_radio_par", (DL_FUNC) &_stfusion_radio_par, 4},
     {"_stfusion_starfm_spatial_filter", (DL_FUNC) &_stfusion_starfm_spatial_filter, 8},

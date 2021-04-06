@@ -15,8 +15,7 @@
 }
 
 .gen_tmp <- function(rtmp, nlyrs) {
-  rtmp[] <- NA
-  stack(lapply(1:nlyrs, function(i, tmp) tmp, tmp = rtmp))
+  rtmp[] <- NA; stack(lapply(1:nlyrs, function(i, tmp) tmp, tmp = rtmp))
 }
 
 

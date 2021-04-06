@@ -1,4 +1,4 @@
 useDynLib(stfusion, .registration=TRUE)
 importFrom(Rcpp, evalCpp)
-import("raster", "stars", "parallel", "doParallel")
+import("raster", "stars", "parallel", "doParallel", "fields")
 exportPattern("^[[:alpha:]]+")

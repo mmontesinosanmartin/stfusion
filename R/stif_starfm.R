@@ -37,11 +37,11 @@ stif_starfm <- function(c1,
   
   # re-sampling images
   no.bnds <- dim(c1)[3]
-  c1.intp <- .raster_warp(c1, f1, "cubic", use_gdal = TRUE)
-  c2.intp <- .raster_warp(c2, f1, "cubic", use_gdal = TRUE)
+  c1.intp <- .raster_warp(c1, f1, "cubic", usegdal = TRUE)
+  c2.intp <- .raster_warp(c2, f1, "cubic", usegdal = TRUE)
   
   # spatial weighting
-  out <- .gen_tmpl(raster(f1), nlayers(f1))
+  out <- .gen_tmp(raster(f1), nlayers(f1))
   out[] <- starfm_spatial_filter(c1 = c1.intp[], c2 = c2.intp[], f1 = f1[],
                                  dims = dim(f1), redb = red.band,
                                  nirb = nir.band, w, ns)
@@ -50,13 +50,4 @@ stif_starfm <- function(c1,
   out <- clamp(out, min(scale), max(scale))
   names(out) <- names(c2)
   return(out)
-}
-
-.raster_warp <- function(r, ref, method, use_gdal){
-  as(st_warp(st_as_stars(r), st_as_stars(ref), method, use_gdal = use_gdal), "Raster")
-}
-
-.gen_tmpl <- function(tmpl, nlyr){
-  tmpl[] <- NA
-  stack(lapply(1:nlyr, function(i, r) r, r = tmpl))
 }

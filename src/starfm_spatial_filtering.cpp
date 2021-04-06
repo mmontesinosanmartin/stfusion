@@ -25,15 +25,13 @@ arma::mat starfm_spatial_filter(arma::mat& c1,
   
   // for each pixel
   for(int i = 0; i < npx; i++) {
-  // int i = 979301;
-  
+
     // stop if needed
     Rcpp::checkUserInterrupt();
     
     // current row-col
     int row = floor(i / ncols);
     int col = i - (ncols * row);
-    // Rcout << row << " " << col << std::endl;
     // window limits
     int wcs = -w; if((col-w) < 0) wcs = - col;
     int wce =  w; if((col+w) > (ncols - 1)) wce = ncols - col - 1;
