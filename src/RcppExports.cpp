@@ -48,25 +48,25 @@ BEGIN_RCPP
 END_RCPP
 }
 // get_fractures
-arma::mat get_fractures(arma::uvec img, arma::uvec ctof, int k);
+arma::mat get_fractures(arma::uvec& img, arma::uvec& ctof, int k);
 RcppExport SEXP _stfusion_get_fractures(SEXP imgSEXP, SEXP ctofSEXP, SEXP kSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::uvec >::type img(imgSEXP);
-    Rcpp::traits::input_parameter< arma::uvec >::type ctof(ctofSEXP);
+    Rcpp::traits::input_parameter< arma::uvec& >::type img(imgSEXP);
+    Rcpp::traits::input_parameter< arma::uvec& >::type ctof(ctofSEXP);
     Rcpp::traits::input_parameter< int >::type k(kSEXP);
     rcpp_result_gen = Rcpp::wrap(get_fractures(img, ctof, k));
     return rcpp_result_gen;
 END_RCPP
 }
 // get_heterogeneity
-arma::vec get_heterogeneity(arma::uvec clss, int w, int nrow, int ncol);
+arma::vec get_heterogeneity(arma::uvec& clss, int w, int nrow, int ncol);
 RcppExport SEXP _stfusion_get_heterogeneity(SEXP clssSEXP, SEXP wSEXP, SEXP nrowSEXP, SEXP ncolSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::uvec >::type clss(clssSEXP);
+    Rcpp::traits::input_parameter< arma::uvec& >::type clss(clssSEXP);
     Rcpp::traits::input_parameter< int >::type w(wSEXP);
     Rcpp::traits::input_parameter< int >::type nrow(nrowSEXP);
     Rcpp::traits::input_parameter< int >::type ncol(ncolSEXP);
@@ -109,7 +109,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // fsdaf_spatial_filtering
-arma::mat fsdaf_spatial_filtering(arma::mat& c1, arma::mat& c2, arma::mat& f1, arma::mat& delta, arma::uvec dims, int w, int nsim, int nclass, double minr, double maxr);
+arma::mat fsdaf_spatial_filtering(arma::mat& c1, arma::mat& c2, arma::mat& f1, arma::mat& delta, arma::uvec dims, int w, unsigned int nsim, int nclass, double minr, double maxr);
 RcppExport SEXP _stfusion_fsdaf_spatial_filtering(SEXP c1SEXP, SEXP c2SEXP, SEXP f1SEXP, SEXP deltaSEXP, SEXP dimsSEXP, SEXP wSEXP, SEXP nsimSEXP, SEXP nclassSEXP, SEXP minrSEXP, SEXP maxrSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -120,7 +120,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::mat& >::type delta(deltaSEXP);
     Rcpp::traits::input_parameter< arma::uvec >::type dims(dimsSEXP);
     Rcpp::traits::input_parameter< int >::type w(wSEXP);
-    Rcpp::traits::input_parameter< int >::type nsim(nsimSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type nsim(nsimSEXP);
     Rcpp::traits::input_parameter< int >::type nclass(nclassSEXP);
     Rcpp::traits::input_parameter< double >::type minr(minrSEXP);
     Rcpp::traits::input_parameter< double >::type maxr(maxrSEXP);
@@ -196,6 +196,31 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
     Rcpp::traits::input_parameter< arma::uvec& >::type n(nSEXP);
     rcpp_result_gen = Rcpp::wrap(composite_genr(x, n));
+    return rcpp_result_gen;
+END_RCPP
+}
+// filter_loa
+int filter_loa(arma::mat x);
+RcppExport SEXP _stfusion_filter_loa(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(filter_loa(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// composite_loa
+arma::uvec composite_loa(arma::mat& x, arma::vec& y, arma::ivec& cdims, int w);
+RcppExport SEXP _stfusion_composite_loa(SEXP xSEXP, SEXP ySEXP, SEXP cdimsSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< arma::ivec& >::type cdims(cdimsSEXP);
+    Rcpp::traits::input_parameter< int >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(composite_loa(x, y, cdims, w));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -284,6 +309,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_stfusion_starfm_spatial_filter", (DL_FUNC) &_stfusion_starfm_spatial_filter, 8},
     {"_stfusion_apply_blur", (DL_FUNC) &_stfusion_apply_blur, 3},
     {"_stfusion_composite_genr", (DL_FUNC) &_stfusion_composite_genr, 2},
+    {"_stfusion_filter_loa", (DL_FUNC) &_stfusion_filter_loa, 1},
+    {"_stfusion_composite_loa", (DL_FUNC) &_stfusion_composite_loa, 4},
     {"_stfusion_composite_lois", (DL_FUNC) &_stfusion_composite_lois, 4},
     {"_stfusion_filter_cor", (DL_FUNC) &_stfusion_filter_cor, 2},
     {"_stfusion_filter_sin", (DL_FUNC) &_stfusion_filter_sin, 2},

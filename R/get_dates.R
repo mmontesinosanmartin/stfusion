@@ -2,11 +2,25 @@
 #' 
 #' Gets the date field from a file name
 #' 
-#' @param filenames a \code{character} vector of file names
-#' @param format a \code{character} specifying the date format
+#' @param fnames a \code{character} vector of names
+#' @param format a \code{character} specifying the date format to be returned
 #' 
 #' @returns a vector of \code{Date}s
 
-get_dates <- function(filenames, format){
-  as.Date(gsub(".*?([0-9]{1,7}).*$", "\\1", filenames), format)
+get_dates <- function(fnames, format = "%Y%j"){
+  as.Date(gsub(".*?([0-9]{1,7}).*$", "\\1", fnames), format)
+}
+
+
+#' Retrieves the capturing dates of an image
+#' 
+#' Gets the date field from a layer name
+#' 
+#' @param r a \code{Raster*} with layer names
+#' @param format a \code{character} specifying the date format to be returned
+#' 
+#' @returns a vector of \code{Date}s
+
+get_dates_from_layer <- function(r, format = "%Y%j"){
+  as.Date(gsub(".*?([0-9]{1,7}).*?", "\\1", names(r)), format)
 }

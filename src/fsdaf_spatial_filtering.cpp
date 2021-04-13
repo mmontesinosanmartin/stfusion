@@ -1,7 +1,33 @@
 // [[Rcpp::depends(RcppArmadillo)]]
 #include <RcppArmadillo.h>
-#include "POOL.h"
+// #include "POOL.h"
 using namespace Rcpp;
+
+
+// [[Rcpp::export]]
+arma::uvec get_ngbs(int i, int w, int nrow, int ncol) {
+  // current row-col
+  int row = (int) floor(i / ncol);
+  int col = i - (ncol * row);
+  // window limits
+  int wcs = -w; if(col-w < 0) wcs = - col;
+  int wce =  w; if((col + w) > (ncol - 1)) wce = ncol - col -1;
+  int wrs = -w; if(row-w < 0) wrs = - row;
+  int wre =  w; if(row + w > nrow - 1) wre = nrow - row - 1;
+  // initialize output
+  int wln = (abs(wcs) + abs(wce) + 1) * (abs(wrs) + abs(wre) + 1);
+  arma::uvec out(wln);
+  // sliding indices
+  size_t z = 0;
+  for(int j = wrs; j <= wre; j++){
+    for(int k = wcs; k <= wce; k++){
+      out[z] = (ncol * j) + i + k;
+      z++;
+    }
+  }
+  // return output
+  return out;
+}
 
 // [[Rcpp::export]]
 double get_dist(int ind, int ref, int w,  int nrows, int ncols) {
@@ -24,7 +50,7 @@ arma::mat fsdaf_spatial_filtering(arma::mat& c1,
                                   arma::mat& delta,
                                   arma::uvec dims,
                                   int w,
-                                  int nsim,
+                                  unsigned int nsim,
                                   int nclass,
                                   double minr,
                                   double maxr){
@@ -53,7 +79,7 @@ arma::mat fsdaf_spatial_filtering(arma::mat& c1,
     size_t z = 0;
     // for each neighbor
     for(int j  = 0; j < nngbs; j++){
-      // compute similiarity (spectral distance)
+      // compute similarity (spectral distance)
       arma::rowvec sdis = abs(f1.row(ngbs[j]) - f1.row(i));
       arma::rowvec rdis = sdis/(f1.row(i) + 1e-4);
       // if below threshold
@@ -86,7 +112,7 @@ arma::mat fsdaf_spatial_filtering(arma::mat& c1,
     arma::rowvec naivep = f1.row(i) + (c2.row(i) - c1.row(i));
     out.row(i) = predic;
     for(int j = 0; j < nbd; j++) {
-      if(out(i,j) < minr | out(i,j) > maxr) out(i,j) = naivep(j);
+      if((out(i,j) < minr) | (out(i,j) > maxr)) out(i,j) = naivep(j);
     }
   }
   // return result

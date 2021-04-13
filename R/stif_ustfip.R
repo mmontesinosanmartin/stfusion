@@ -15,6 +15,7 @@
 #' @param sngb.lr number of neighboring pixels for the virtual image generation
 #' @param sngb.wg number of neighboring pixels for the residual compensation
 #' @param nsim number of similar pixels in each neighborhood
+#' @param selec character. Data selection strategy, either "optimal" (default) or "lastavl", i.e. last available .
 #' @param scale the dynamic range of the image (default, \code{c(0,1)}
 #' @param verbose whether to notify intermediate steps (default, \code{TRUE)}
 #' 
@@ -26,10 +27,13 @@ stif_ustfip <- function(f.ts,
                         sngb.wg,
                         nsim,
                         c.ts = NULL,
+                        selec = "optimal",
                         scale = c(0,1),
                         ncores = 1,
                         verbose = TRUE){
 
+  # ordering by date
+  f.ts <- f.ts[order(abs(as.Date(names(f.ts)) - get_dates_from_layer(c.tk)[1]))]
   # basic info.:fine
   fnm <- dim(f.ts[[1]])[1:2]; ntm <- length(f.ts)
   ftm <- raster(f.ts[[1]]); ftm[] <- NA
@@ -62,7 +66,8 @@ stif_ustfip <- function(f.ts,
     fones <- setValues(ftm, 1)
     
     # composite
-    c.cmp <- composite_lois(x.mat, y.mat, cnm, sngb.lr)
+    if(selec == "optimal") c.cmp <- composite_lois(x.mat, y.mat, cnm, sngb.lr)
+    if(selec == "lastavl") c.cmp <- composite_loa(x.mat, y.mat, cnm, sngb.lr)
     f.cmp <- as.matrix(resample(setValues(ctm, c.cmp), ftm, "ngb")[])
     f.ref <- setValues(ftm,composite_genr(f.mat, f.cmp))
     
@@ -114,7 +119,10 @@ stif_ustfip <- function(f.ts,
   # saving results
   names(f2.pred) <- names(c.tk)
   f2.pred <- clamp(f2.pred, lower = min(scale), upper = max(scale))
-  return(f2.pred)
+  
+  if(verbose) out <- list(f2.lm = f2.raw, f2.pred = f2.pred)
+  if(!verbose) out <- list(f2.pred = f2.pred)
+  return(out)
 }
 
 # Helper: check/generate coarse images when needed

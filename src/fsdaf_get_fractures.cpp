@@ -3,8 +3,8 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-arma::mat get_fractures(arma::uvec img,
-                        arma::uvec ctof,
+arma::mat get_fractures(arma::uvec& img,
+                        arma::uvec& ctof,
                         int k){
   
   arma::uvec coarse = unique(ctof);

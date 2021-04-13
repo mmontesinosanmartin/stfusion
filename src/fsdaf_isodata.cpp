@@ -154,7 +154,11 @@ arma::uvec classify_isodata(arma::mat img,
       int cursor = 0;
       for(int classi = 0; classi < k; classi++){
         for(int classj = 0; classj < classi; classj++){
-          distStruct.row(cursor) = {eudist(classi, classj), classi, classj, 0, 0};
+          distStruct(cursor,0) = eudist(classi, classj);
+          distStruct(cursor,1) = classi;
+          distStruct(cursor,2) = classj; 
+          distStruct(cursor,3)  = 0; 
+          distStruct(cursor,4)  = 0;
           cursor += 1;
         }
       }

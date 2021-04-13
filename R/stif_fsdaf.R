@@ -20,9 +20,9 @@
 #' with different resolutions. Remote Sensing of Environment, 172, 165-177.
 #' 
 stif_fsdaf <- function(
-  f1,
   c1,
   c2,
+  f1,
   w = 20,
   k = 4,
   ktype = "iso",
@@ -39,7 +39,7 @@ stif_fsdaf <- function(
   # image adjustment
   zoom <- max(ceiling(res(c1)/res(f1)))
   ctof <- resample(setValues(raster(c1), 1:ncell(c1)), f1, "ngb")
-  f1 <- .raster_warp(f1, ctof, "cubic", usegdal = TRUE)
+  f1 <- stfusion:::.raster_warp(f1, ctof, "cubic", usegdal = TRUE)
   
   # image classification
   if(verbose) message("1) classification")
@@ -61,9 +61,9 @@ stif_fsdaf <- function(
   }
   
   # readjusting spatial extent
-  f1c <- .raster_warp(f1, c1, "average", usegdal = TRUE)
-  c1f <- .raster_warp(c1, f1, "near", usegdal = TRUE)
-  c2f <- .raster_warp(c1, f1, "near", usegdal = TRUE)
+  f1c <- stfusion:::.raster_warp(f1, c1, "average", usegdal = TRUE)
+  c1f <- stfusion:::.raster_warp(c1, f1, "near", usegdal = TRUE)
+  c2f <- stfusion:::.raster_warp(c1, f1, "near", usegdal = TRUE)
   
   # get the fractures
   cls.mat <- as.matrix(cls[])
@@ -100,15 +100,16 @@ stif_fsdaf <- function(
   f2.tph <- clamp(f1 + df, min(scale), max(scale))
   
   # aggregate prediction to coarse resolution
-  f2c <- .raster_warp(f2.tph, c1, "average", usegdal = TRUE)
+  f2c <- stfusion:::.raster_warp(f2.tph, c1, "average", usegdal = TRUE)
   
   # find minimum and maximum values allowed
   min.allow <- apply(rbind(cellStats(f2.tph, "min"),cellStats(c2, "min")), 2, min)
   max.allow <- apply(rbind(cellStats(f2.tph, "max"),cellStats(c2, "max")), 2, min)
   
   # prediction using tps
-  f2.tps <- .raster_tps(f2c, .gen_tmp(raster(f1), 1), big = big)
-    
+  # f2.tps <- .raster_tps(f2c, stfusion:::.gen_tmp(raster(f1), 1), big = big)
+  f2.tps <- stfusion:::.raster_warp(f2c, stfusion:::.gen_tmp(raster(f1), 1), "cubic", usegdal = TRUE)
+  
   # computation of residuals
   predict.change <- f2c- f1c
   real.change <- c2 - c1
@@ -124,12 +125,12 @@ stif_fsdaf <- function(
   
   # compute residual weighs based on heterogeneity
   w.change <- (w.change.tps * het) + (w.uniform * (1 - het)) + 1e-5
-  w.chnavg <- resample(.raster_warp(w.change, c1, "average", usegdal = TRUE), f1, "ngb")
+  w.chnavg <- resample(stfusion:::.raster_warp(w.change, c1, "average", usegdal = TRUE), f1, "ngb")
   w.change <- w.change / w.chnavg
   
   # restrict the residuals and normalize
   w.change <- clamp(w.change, lower = -10, upper = 10)
-  w.chnavg <- resample(.raster_warp(w.change, c1, "average", usegdal = TRUE), f1, "ngb")
+  w.chnavg <- resample(stfusion:::.raster_warp(w.change, c1, "average", usegdal = TRUE), f1, "ngb")
   w.change <- w.change / w.chnavg
   delta <- w.change * dif.change
   
@@ -169,7 +170,7 @@ stif_fsdaf <- function(
     xy <- xy[!is.na(v),]
     v <- v[!is.na(v)]
     # tps <- bigtps(xy, v)
-    tps <- fastTps(xy, v, theta = 3)
+    tps <- fastTps(xy, v, theta = 0.018)
     interpolate(tmpl, tps)
   }, r = s)))
 }

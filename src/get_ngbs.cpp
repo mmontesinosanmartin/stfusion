@@ -1,11 +1,12 @@
 // [[Rcpp::depends(RcppArmadillo)]]
 #include <RcppArmadillo.h>
+#include "POOL.h"
 using namespace Rcpp;
 
 // [[Rcpp::export]]
 arma::uvec get_ngbs(int i, int w, int nrow, int ncol) {
   // current row-col
-  int row = floor(i / ncol);
+  int row = (int) floor(i / ncol);
   int col = i - (ncol * row);
   // window limits
   int wcs = -w; if(col-w < 0) wcs = - col;
@@ -19,8 +20,8 @@ arma::uvec get_ngbs(int i, int w, int nrow, int ncol) {
   size_t z = 0;
   for(int j = wrs; j <= wre; j++){
     for(int k = wcs; k <= wce; k++){
-      out(z) = (ncol * j) + i + k;
-      z++; 
+      out[z] = (ncol * j) + i + k;
+      z++;
     }
   }
   // return output

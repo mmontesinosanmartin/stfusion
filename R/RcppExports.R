@@ -70,6 +70,14 @@ composite_genr <- function(x, n) {
     .Call(`_stfusion_composite_genr`, x, n)
 }
 
+filter_loa <- function(x) {
+    .Call(`_stfusion_filter_loa`, x)
+}
+
+composite_loa <- function(x, y, cdims, w) {
+    .Call(`_stfusion_composite_loa`, x, y, cdims, w)
+}
+
 composite_lois <- function(x, y, cdims, w) {
     .Call(`_stfusion_composite_lois`, x, y, cdims, w)
 }
