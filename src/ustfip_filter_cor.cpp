@@ -13,3 +13,4 @@ int filter_cor(arma::mat x, arma::vec y){
   int mxcor = vcors.index_max();
   return mxcor;
 }
+

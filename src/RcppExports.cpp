@@ -174,6 +174,46 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// get_wgts
+arma::vec get_wgts(arma::vec& x, int cntr);
+RcppExport SEXP _stfusion_get_wgts(SEXP xSEXP, SEXP cntrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< int >::type cntr(cntrSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_wgts(x, cntr));
+    return rcpp_result_gen;
+END_RCPP
+}
+// fit_wlm
+arma::vec fit_wlm(arma::vec& x, arma::mat& y, arma::vec& wgt);
+RcppExport SEXP _stfusion_fit_wlm(SEXP xSEXP, SEXP ySEXP, SEXP wgtSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type wgt(wgtSEXP);
+    rcpp_result_gen = Rcpp::wrap(fit_wlm(x, y, wgt));
+    return rcpp_result_gen;
+END_RCPP
+}
+// local_wlm
+arma::mat local_wlm(arma::mat& x, arma::mat& y, arma::uvec& n, arma::ivec& cdims, int w);
+RcppExport SEXP _stfusion_local_wlm(SEXP xSEXP, SEXP ySEXP, SEXP nSEXP, SEXP cdimsSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< arma::uvec& >::type n(nSEXP);
+    Rcpp::traits::input_parameter< arma::ivec& >::type cdims(cdimsSEXP);
+    Rcpp::traits::input_parameter< int >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(local_wlm(x, y, n, cdims, w));
+    return rcpp_result_gen;
+END_RCPP
+}
 // apply_blur
 arma::mat apply_blur(arma::mat& r, arma::uvec& rdims, double sigma);
 RcppExport SEXP _stfusion_apply_blur(SEXP rSEXP, SEXP rdimsSEXP, SEXP sigmaSEXP) {
@@ -235,6 +275,71 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::ivec& >::type cdims(cdimsSEXP);
     Rcpp::traits::input_parameter< int >::type w(wSEXP);
     rcpp_result_gen = Rcpp::wrap(composite_lois(x, y, cdims, w));
+    return rcpp_result_gen;
+END_RCPP
+}
+// filter_rand
+int filter_rand(arma::mat x);
+RcppExport SEXP _stfusion_filter_rand(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(filter_rand(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// composite_rand
+arma::uvec composite_rand(arma::mat& x, arma::vec& y, arma::ivec& cdims, int w);
+RcppExport SEXP _stfusion_composite_rand(SEXP xSEXP, SEXP ySEXP, SEXP cdimsSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< arma::ivec& >::type cdims(cdimsSEXP);
+    Rcpp::traits::input_parameter< int >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(composite_rand(x, y, cdims, w));
+    return rcpp_result_gen;
+END_RCPP
+}
+// wcor
+double wcor(arma::vec x, arma::vec y, arma::vec w);
+RcppExport SEXP _stfusion_wcor(SEXP xSEXP, SEXP ySEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type y(ySEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(wcor(x, y, w));
+    return rcpp_result_gen;
+END_RCPP
+}
+// filter_wcor
+int filter_wcor(arma::mat x, arma::vec y, int cntr);
+RcppExport SEXP _stfusion_filter_wcor(SEXP xSEXP, SEXP ySEXP, SEXP cntrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type y(ySEXP);
+    Rcpp::traits::input_parameter< int >::type cntr(cntrSEXP);
+    rcpp_result_gen = Rcpp::wrap(filter_wcor(x, y, cntr));
+    return rcpp_result_gen;
+END_RCPP
+}
+// composite_wlois
+arma::uvec composite_wlois(arma::mat& x, arma::vec& y, arma::ivec& cdims, int w);
+RcppExport SEXP _stfusion_composite_wlois(SEXP xSEXP, SEXP ySEXP, SEXP cdimsSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< arma::ivec& >::type cdims(cdimsSEXP);
+    Rcpp::traits::input_parameter< int >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(composite_wlois(x, y, cdims, w));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -307,11 +412,19 @@ static const R_CallMethodDef CallEntries[] = {
     {"_stfusion_get_ngbs", (DL_FUNC) &_stfusion_get_ngbs, 4},
     {"_stfusion_radio_par", (DL_FUNC) &_stfusion_radio_par, 4},
     {"_stfusion_starfm_spatial_filter", (DL_FUNC) &_stfusion_starfm_spatial_filter, 8},
+    {"_stfusion_get_wgts", (DL_FUNC) &_stfusion_get_wgts, 2},
+    {"_stfusion_fit_wlm", (DL_FUNC) &_stfusion_fit_wlm, 3},
+    {"_stfusion_local_wlm", (DL_FUNC) &_stfusion_local_wlm, 5},
     {"_stfusion_apply_blur", (DL_FUNC) &_stfusion_apply_blur, 3},
     {"_stfusion_composite_genr", (DL_FUNC) &_stfusion_composite_genr, 2},
     {"_stfusion_filter_loa", (DL_FUNC) &_stfusion_filter_loa, 1},
     {"_stfusion_composite_loa", (DL_FUNC) &_stfusion_composite_loa, 4},
     {"_stfusion_composite_lois", (DL_FUNC) &_stfusion_composite_lois, 4},
+    {"_stfusion_filter_rand", (DL_FUNC) &_stfusion_filter_rand, 1},
+    {"_stfusion_composite_rand", (DL_FUNC) &_stfusion_composite_rand, 4},
+    {"_stfusion_wcor", (DL_FUNC) &_stfusion_wcor, 3},
+    {"_stfusion_filter_wcor", (DL_FUNC) &_stfusion_filter_wcor, 3},
+    {"_stfusion_composite_wlois", (DL_FUNC) &_stfusion_composite_wlois, 4},
     {"_stfusion_filter_cor", (DL_FUNC) &_stfusion_filter_cor, 2},
     {"_stfusion_filter_sin", (DL_FUNC) &_stfusion_filter_sin, 2},
     {"_stfusion_local_lm", (DL_FUNC) &_stfusion_local_lm, 5},

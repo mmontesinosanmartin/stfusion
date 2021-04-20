@@ -3,23 +3,6 @@
 #include "POOL.h"
 using namespace Rcpp;
 
-//' @title Calculate radiometric parameters
-//' 
-//' @description Calculates the slope and intercept to radiometrically correct
-//' satellite images.
-//' 
-//' @details the function has to be applied for each band independently. 
-//' Matrices x and y must have the pixels as rows and different dates as
-//' columns. Both matrices must have the same length and NAs are not
-//' allowed.
-//' 
-//' @param x a matrix with the original image (pixels x dates)
-//' @param y a matrix with the reference image (pixels x dates)
-//' @param dims a vector with the dimensions of the image (rows x columns)
-//' @param w a number specifying the window radius (side 2w+1)
-//' 
-//' @returns a matrix with pixels x parameters (slope and intercept)
-//' 
 // [[Rcpp::export]]
 arma::mat radio_par(arma::mat x, arma::mat y, arma::uvec dims, int w){
   

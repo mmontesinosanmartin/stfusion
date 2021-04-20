@@ -1,4 +1,4 @@
-// [[Rcpp::depends(RcppArmadillo)]]
+//[[Rcpp::depends(RcppArmadillo)]]
 #include <RcppArmadillo.h>
 #include "POOL.h"
 using namespace Rcpp;
@@ -28,13 +28,33 @@ using namespace Rcpp;
 //   return out;
 // }
 
+//[[Rcpp::export]]
+arma::vec get_wgts(arma::vec& x, int cntr){
+  // sum of square differences
+  arma::vec diff = x - x(cntr);
+  arma::vec dfsq = 1. / (abs(diff) + 1e-8);
+  // return normalized
+  return sqrt(dfsq/sum(dfsq));
+}
 
 // [[Rcpp::export]]
-arma::mat local_lm(arma::mat& x,
-                   arma::mat& y,
-                   arma::uvec& n,
-                   arma::ivec& cdims,
-                   int w) {
+arma::vec fit_wlm(arma::vec& x,
+                  arma::mat& y,
+                  arma::vec& wgt){
+  // add constant
+  arma::mat xmat = arma::join_rows(x, arma::ones(x.n_rows));
+  // solve coefficients
+  arma::vec beta = solve(xmat.each_col() % wgt, y.each_col() % wgt);
+  return beta;
+}
+
+// [[Rcpp::export]]
+arma::mat local_wlm(arma::mat& x,
+                    arma::mat& y,
+                    arma::uvec& n,
+                    arma::ivec& cdims,
+                    int w) {
+
   // initialize output
   int npx = x.n_rows;
   int ntm = x.n_cols;
@@ -48,16 +68,17 @@ arma::mat local_lm(arma::mat& x,
   for(int i = 0; i < npx; i++) {
     // neighboring pixels
     arma::uvec inds = get_ngbs(i, w, nrow, ncol);
+    arma::uvec cntr = find(inds == i);
     // regression data
     arma::mat yng = y.rows(inds);
     arma::mat xng = x.rows(inds);
     arma::vec xin = xng.col(n(i));
+    // computing weights
+    arma::vec wgt = get_wgts(xin, cntr[0]);
     // when available
     if(xin.is_finite()){
-      arma::vec kns = arma::ones(xin.n_rows);
-      // coefficients
-      arma::mat xinp = join_horiz(xin, kns);
-      arma::vec coef = arma::solve(xinp, yng);
+      // fit
+      arma::vec coef = fit_wlm(xin, yng, wgt);
       // saving
       arma::vec outi = arma::zeros(ncl);
       outi(n(i)) = coef[0];

@@ -21,7 +21,7 @@
 #' 
 #' @return the fine image predicted at \eqn{t_k} as a \code{RasterStack}
 #' 
-stif_ustfip <- function(f.ts,
+stif_ustfipw <- function(f.ts,
                         c.tk,
                         sngb.lr,
                         sngb.wg,
@@ -52,7 +52,7 @@ stif_ustfip <- function(f.ts,
   sngb.lr <- max(1, sngb.lr)
   spwgt <- sngb.wg + 0.5
   # open
-  clustr <- makeCluster(ncores)
+  clustr <- makeCluster(ncores, outfile = "log.txt")
   doParallel::registerDoParallel(clustr)
   
   # layer-wise
@@ -68,13 +68,12 @@ stif_ustfip <- function(f.ts,
     # composite
     if(selec == "optimal") c.cmp <- composite_lois(x.mat, y.mat, cnm, sngb.lr)
     if(selec == "lastavl") c.cmp <- composite_loa(x.mat, y.mat, cnm, sngb.lr)
-    if(selec == "randomv") c.cmp <- composite_rand(x.mat, y.mat, cnm, sngb.lr)
     f.cmp <- as.matrix(resample(setValues(ctm, c.cmp), ftm, "ngb")[])
     f.ref <- setValues(ftm,composite_genr(f.mat, f.cmp))
     
     # fitting
     coeff <- stfusion:::.gen_tmp(ctm, ntm + 1)
-    coeff <- setValues(coeff, local_lm(x.mat, y.mat, c.cmp, cnm, sngb.lr))
+    coeff <- setValues(coeff, local_wlm(x.mat, y.mat, c.cmp, cnm, sngb.lr))
     
     # predicting
     c.hat <- calc(coeff * stack(c.ts[[i]], cones), sum, na.rm = TRUE)
@@ -136,11 +135,13 @@ stif_ustfip <- function(f.ts,
     miss <- which(!(f.dates %in% c.dates))
     # combine existing with generated
     if(length(miss) > 0){
-      c.ts <- c(c.ts, stfusion::get_coarse_par(f.ts[miss], ctm, ncores = ncores))
+      if(ncores > 1) c.ts <- c(c.ts, get_coarse_par(f.ts[miss], ctm, ncores = ncores))
+      if(ncores == 1) c.ts <- c(c.ts, get_coarse(f.ts[miss], ctm))
     }
   # if there is none
   } else {
-    c.ts <- stfusion::get_coarse_par(f.ts, ctm, ncores = ncores)
+    if(ncores > 1) c.ts <- get_coarse_par(f.ts, ctm, ncores = ncores)
+    if(ncores == 1) c.ts <- get_coarse(f.ts, ctm)
   }
   # ensure same order
   c.ts <- c.ts[names(f.ts)]

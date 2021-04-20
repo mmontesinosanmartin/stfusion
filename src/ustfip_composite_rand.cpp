@@ -28,42 +28,38 @@ using namespace Rcpp;
 //   return out;
 // }
 
+// [[Rcpp::export]]
+int filter_rand(arma::mat x){
+  // sum columns
+  arma::rowvec scol = sum(x, 0);
+  // find finite
+  arma::uvec fcol = arma::find_finite(scol);
+  // shuffle and pick
+  arma::uvec rand = arma::shuffle(fcol);
+  // return
+  return rand[0];
+}
 
 // [[Rcpp::export]]
-arma::mat local_lm(arma::mat& x,
-                   arma::mat& y,
-                   arma::uvec& n,
-                   arma::ivec& cdims,
-                   int w) {
+arma::uvec composite_rand(arma::mat& x,
+                          arma::vec& y,
+                          arma::ivec& cdims,
+                          int w){
   // initialize output
   int npx = x.n_rows;
-  int ntm = x.n_cols;
-  int ncl = ntm + 1;
-  arma::mat out(npx, ncl);
-  out.fill(arma::datum::nan);
+  arma::uvec out(npx);
   // inner parameters
   int nrow = cdims(0);
   int ncol = cdims(1);
   // for each pixel
   for(int i = 0; i < npx; i++) {
-    // neighboring pixels
+    // neighbors
     arma::uvec inds = get_ngbs(i, w, nrow, ncol);
-    // regression data
-    arma::mat yng = y.rows(inds);
+    // data
     arma::mat xng = x.rows(inds);
-    arma::vec xin = xng.col(n(i));
-    // when available
-    if(xin.is_finite()){
-      arma::vec kns = arma::ones(xin.n_rows);
-      // coefficients
-      arma::mat xinp = join_horiz(xin, kns);
-      arma::vec coef = arma::solve(xinp, yng);
-      // saving
-      arma::vec outi = arma::zeros(ncl);
-      outi(n(i)) = coef[0];
-      outi(ncl - 1) = coef[1];
-      out.row(i) = outi.as_row();
-    }
+    arma::mat yng = y.rows(inds);
+    // best time period
+    out(i) = filter_rand(xng);
   }
   // return result
   return out;

@@ -37,29 +37,24 @@ get_ngbs <- function(i, w, nrow, ncol) {
     .Call(`_stfusion_get_ngbs`, i, w, nrow, ncol)
 }
 
-#' @title Calculate radiometric parameters
-#' 
-#' @description Calculates the slope and intercept to radiometrically correct
-#' satellite images.
-#' 
-#' @details the function has to be applied for each band independently. 
-#' Matrices x and y must have the pixels as rows and different dates as
-#' columns. Both matrices must have the same length and NAs are not
-#' allowed.
-#' 
-#' @param x a matrix with the original image (pixels x dates)
-#' @param y a matrix with the reference image (pixels x dates)
-#' @param dims a vector with the dimensions of the image (rows x columns)
-#' @param w a number specifying the window radius (side 2w+1)
-#' 
-#' @returns a matrix with pixels x parameters (slope and intercept)
-#' 
 radio_par <- function(x, y, dims, w) {
     .Call(`_stfusion_radio_par`, x, y, dims, w)
 }
 
 starfm_spatial_filter <- function(c1, c2, f1, dims, redb, nirb, w, ns) {
     .Call(`_stfusion_starfm_spatial_filter`, c1, c2, f1, dims, redb, nirb, w, ns)
+}
+
+get_wgts <- function(x, cntr) {
+    .Call(`_stfusion_get_wgts`, x, cntr)
+}
+
+fit_wlm <- function(x, y, wgt) {
+    .Call(`_stfusion_fit_wlm`, x, y, wgt)
+}
+
+local_wlm <- function(x, y, n, cdims, w) {
+    .Call(`_stfusion_local_wlm`, x, y, n, cdims, w)
 }
 
 apply_blur <- function(r, rdims, sigma) {
@@ -80,6 +75,26 @@ composite_loa <- function(x, y, cdims, w) {
 
 composite_lois <- function(x, y, cdims, w) {
     .Call(`_stfusion_composite_lois`, x, y, cdims, w)
+}
+
+filter_rand <- function(x) {
+    .Call(`_stfusion_filter_rand`, x)
+}
+
+composite_rand <- function(x, y, cdims, w) {
+    .Call(`_stfusion_composite_rand`, x, y, cdims, w)
+}
+
+wcor <- function(x, y, w) {
+    .Call(`_stfusion_wcor`, x, y, w)
+}
+
+filter_wcor <- function(x, y, cntr) {
+    .Call(`_stfusion_filter_wcor`, x, y, cntr)
+}
+
+composite_wlois <- function(x, y, cdims, w) {
+    .Call(`_stfusion_composite_wlois`, x, y, cdims, w)
 }
 
 filter_cor <- function(x, y) {

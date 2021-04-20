@@ -36,12 +36,12 @@ get_coarse_par <- function(fimg,
     nimg <- length(fimg)
     imnm <- names(fimg)
     nlyr <- nlayers(fimg[[1]])
-    fimg <- fimg
+    fimgs <- fimg
   } else {
     nimg <- 1
     imnm <- NULL
     nlyr <- nlayers(fimg)
-    imgs <- list(); imgs[[1]] <- fimg
+    fimgs <- list(); fimgs[[1]] <- fimg
   }
   # check templates
   is.tmp.series <- is.list(tmpl)
@@ -64,8 +64,8 @@ get_coarse_par <- function(fimg,
   out <- foreach(i = 1:nimg, .packages = c("raster", "stfusion")) %dopar% {
     # Select image
     if(verbose) message(paste0("processing image ", i))
-    fimgi <- fimg[[i]]
-    # fimgi <- disaggregate(fimg[[i]], 2, method = "")
+    fimgi <- fimgs[[i]]
+    # fimgi <- disaggregate(fimg[[i]], 1, method = "")
     tmpli <- tmpl[[ifelse(is.tmp.series, i, 1)]]
     # Aggregation
     fimgi[is.na(fimgi)] <- Inf

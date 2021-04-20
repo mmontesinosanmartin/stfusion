@@ -28,42 +28,50 @@ using namespace Rcpp;
 //   return out;
 // }
 
+// [[Rcpp::export]]
+double wcor(arma::vec x, arma::vec y, arma::vec w){
+  double mx = sum(w % x) / sum(w);
+  double my = sum(w % y) / sum(w);
+  double sx = sum(w % pow((x - mx), 2)) / sum(w);
+  double sy = sum(w % pow((y - my), 2)) / sum(w);
+  double sxy = sum(w % (x -  mx) % (y - my)) / sum(w);
+  return sxy / sqrt(sx * sy);
+}
 
 // [[Rcpp::export]]
-arma::mat local_lm(arma::mat& x,
-                   arma::mat& y,
-                   arma::uvec& n,
-                   arma::ivec& cdims,
-                   int w) {
+int filter_wcor(arma::mat x, arma::vec y, int cntr){
+  // correlations
+  arma::mat cors(x.n_cols, 1);
+  for(unsigned int i = 0; i < x.n_cols; i++){
+    arma::vec diff = 1. / (sqrt(pow((x.col(i) - x(cntr, i)),2)) + 1e-8);
+    cors.row(i) = wcor(x.col(i), y, diff);}
+  // maximum
+  arma::vec vcors = vectorise(cors);
+  int mxcor = vcors.index_max();
+  return mxcor;
+}
+
+// [[Rcpp::export]]
+arma::uvec composite_wlois(arma::mat& x,
+                          arma::vec& y,
+                          arma::ivec& cdims,
+                          int w){
   // initialize output
   int npx = x.n_rows;
-  int ntm = x.n_cols;
-  int ncl = ntm + 1;
-  arma::mat out(npx, ncl);
-  out.fill(arma::datum::nan);
+  arma::uvec out(npx);
   // inner parameters
   int nrow = cdims(0);
   int ncol = cdims(1);
   // for each pixel
   for(int i = 0; i < npx; i++) {
-    // neighboring pixels
+    // neighbors
     arma::uvec inds = get_ngbs(i, w, nrow, ncol);
-    // regression data
-    arma::mat yng = y.rows(inds);
+    arma::uvec cntr = find(inds == i);
+    // data
     arma::mat xng = x.rows(inds);
-    arma::vec xin = xng.col(n(i));
-    // when available
-    if(xin.is_finite()){
-      arma::vec kns = arma::ones(xin.n_rows);
-      // coefficients
-      arma::mat xinp = join_horiz(xin, kns);
-      arma::vec coef = arma::solve(xinp, yng);
-      // saving
-      arma::vec outi = arma::zeros(ncl);
-      outi(n(i)) = coef[0];
-      outi(ncl - 1) = coef[1];
-      out.row(i) = outi.as_row();
-    }
+    arma::mat yng = y.rows(inds);
+    // best time period
+    out(i) = filter_wcor(xng, yng, cntr[0]);
   }
   // return result
   return out;

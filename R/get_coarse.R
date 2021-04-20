@@ -71,7 +71,7 @@ get_coarse <- function(fimg,
     chati <- warp_stack(fimgi, tmpli, "average", usegdal = TRUE)
     chati[is.infinite(chati)] <- NA
     # Blurring
-    if(blurr) chati[] <- apply_blur(as.matrix(chati[]), dim(chati), 1)
+    if(blurr) chati[] <- apply_blur(as.matrix(chati[]), dim(chati), 1.)
     # Radiometric correction
     if(rad.cor) chati <- slope[[i]] * chati + inter[[i]]
     # Save

@@ -34,78 +34,78 @@
 #' s2 <- stack(r2,r2)
 #' get_tvi(s1,s2,w=5) 
 #' 
-get_tvi <- function(s1, s2, w = 1){
-
-  # input re-format
-  w <- as.integer(w)
-  sdim <- dim(f1)[1:2]
-  m1 <- extend(s1, c(w,w), value=Inf)[]
-  m2 <- extend(s2, c(w,w), value=Inf)[]
-  
-  # output
-  out <- raster(s1)
-  
-  # apply algorithm
-  out[] <- tvar_cpp(m1, m2, sdim, w)
-  
-  return(out)
-}
-
-cppFunction(depends="RcppArmadillo",
-'arma::vec tvar_cpp(arma::mat s1,
-                    arma::mat s2,
-                    arma::ivec sdim,
-                    int w) {
-
- int clp = sdim[1] + (2 * w);
- int cmx = sdim[1] + w;
- int rwp = sdim[0] + (2 * w);
- int str = clp * w;
- int end = clp * (rwp - w);
-
- arma::vec diffa(s1.n_cols);
- arma::vec diffb(s1.n_cols);
- arma::vec out(prod(sdim));
- 
- // for each pixel
- for(int i = str; i < end; i++){
-
-  // select the neighborhood
-  int col = i  % clp;
-  int row = floor(i /clp);
-  
-  if((col >= w) & (col < cmx)) {
-   
-   diffa.fill(999);
-   diffb.fill(999);
-   
-   for(int j = -w; j <= w; j++) {
-    for(int k = -w; k <= w; k++) {
-     int ind = (clp * j) + i + k;
-     arma::rowvec diffai = clamp(s2.row(ind) - s1.row(i),0,1);
-     arma::rowvec diffbi = clamp(s1.row(ind) - s2.row(i),0,1);
-     for(int l = 0; l < s2.n_cols; l++){
-       if(diffai(l) < diffa(l)) {
-         diffa(l) = diffai(l);
-       }
-       if(diffbi(l) < diffb(l)) {
-         diffb(l) = diffbi(l);
-       }
-     }
-    }
-   }
-   
-   arma::uvec diffs0 = find(diffa == 0);
-   if(diffs0.n_elem > 0) {
-     diffa(diffs0) = diffb(diffs0) * -1;
-   }
-   
-   int outi = (row-w) * sdim[1] + (col - w);
-   arma::vec diffsq = square(diffa);
-   out(outi) = sqrt(sum(diffsq));
-
-  }
- }
-
- return(out);
-}')
+# get_tvi <- function(s1, s2, w = 1){
+# 
+#   # input re-format
+#   w <- as.integer(w)
+#   sdim <- dim(f1)[1:2]
+#   m1 <- extend(s1, c(w,w), value=Inf)[]
+#   m2 <- extend(s2, c(w,w), value=Inf)[]
+#   
+#   # output
+#   out <- raster(s1)
+#   
+#   # apply algorithm
+#   out[] <- tvar_cpp(m1, m2, sdim, w)
+#   
+#   return(out)
+# }
+# 
+# cppFunction(depends="RcppArmadillo",
+# 'arma::vec tvar_cpp(arma::mat s1,
+#                     arma::mat s2,
+#                     arma::ivec sdim,
+#                     int w) {
+# 
+#  int clp = sdim[1] + (2 * w);
+#  int cmx = sdim[1] + w;
+#  int rwp = sdim[0] + (2 * w);
+#  int str = clp * w;
+#  int end = clp * (rwp - w);
+# 
+#  arma::vec diffa(s1.n_cols);
+#  arma::vec diffb(s1.n_cols);
+#  arma::vec out(prod(sdim));
+#  
+#  // for each pixel
+#  for(int i = str; i < end; i++){
+# 
+#   // select the neighborhood
+#   int col = i  % clp;
+#   int row = floor(i /clp);
+#   
+#   if((col >= w) & (col < cmx)) {
+#    
+#    diffa.fill(999);
+#    diffb.fill(999);
+#    
+#    for(int j = -w; j <= w; j++) {
+#     for(int k = -w; k <= w; k++) {
+#      int ind = (clp * j) + i + k;
+#      arma::rowvec diffai = clamp(s2.row(ind) - s1.row(i),0,1);
+#      arma::rowvec diffbi = clamp(s1.row(ind) - s2.row(i),0,1);
+#      for(int l = 0; l < s2.n_cols; l++){
+#        if(diffai(l) < diffa(l)) {
+#          diffa(l) = diffai(l);
+#        }
+#        if(diffbi(l) < diffb(l)) {
+#          diffb(l) = diffbi(l);
+#        }
+#      }
+#     }
+#    }
+#    
+#    arma::uvec diffs0 = find(diffa == 0);
+#    if(diffs0.n_elem > 0) {
+#      diffa(diffs0) = diffb(diffs0) * -1;
+#    }
+#    
+#    int outi = (row-w) * sdim[1] + (col - w);
+#    arma::vec diffsq = square(diffa);
+#    out(outi) = sqrt(sum(diffsq));
+# 
+#   }
+#  }
+# 
+#  return(out);
+# }')
