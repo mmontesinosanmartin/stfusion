@@ -77,6 +77,10 @@ composite_lois <- function(x, y, cdims, w) {
     .Call(`_stfusion_composite_lois`, x, y, cdims, w)
 }
 
+composite_loisi <- function(x, y, cdims, w) {
+    .Call(`_stfusion_composite_loisi`, x, y, cdims, w)
+}
+
 filter_rand <- function(x) {
     .Call(`_stfusion_filter_rand`, x)
 }

@@ -1083,3 +1083,1271 @@ There were 26 warnings (use warnings() to see them)
 There were 13 warnings (use warnings() to see them)
 
 
+starting worker pid=8916 on localhost:11735 at 15:06:19.884
+starting worker pid=13712 on localhost:11735 at 15:06:19.901
+starting worker pid=9368 on localhost:11735 at 15:06:19.904
+starting worker pid=4784 on localhost:11735 at 15:06:19.917
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: sp
+Loading required package: stfusion
+Loading required package: stars
+Loading required package: raster
+Loading required package: abind
+Loading required package: sp
+Loading required package: sf
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: stars
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: sp
+Loading required package: abind
+Loading required package: parallel
+Loading required package: sf
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: doParallel
+Loading required package: stars
+Loading required package: abind
+Loading required package: foreach
+Loading required package: parallel
+Loading required package: doParallel
+Loading required package: sf
+Loading required package: foreach
+Loading required package: iterators
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: iterators
+Loading required package: parallel
+Loading required package: fields
+Loading required package: doParallel
+Loading required package: stfusion
+Loading required package: spam
+h
+Loading required package: raster
+Loading required package: dotCall64
+Loading required package: fields
+Loading required package: iterators
+Loading required package: sp
+Loading required package: spam
+Loading required package: grid
+Loading required package: dotCall64
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Loading required package: grid
+Loading required package: fields
+Loading required package: stars
+
+Attaching package: 'spam'
+
+Loading required package: spam
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Loading required package: abind
+s for
+ an extensive vignette, other supplements and source code 
+Loading required package: dotCall64
+Loading required package: Rcpp
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: 'spam'
+
+Loading required package: sf
+ed from 'package:base':
+
+    backsolve, forwardsolve
+
+Loading required package: grid
+Loading required package: RcppArmadillo
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: Rcpp
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Loading required package: parallel
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: RcppArmadillo
+Loading required package: Rcpp
+Loading required package: doParallel
+loaded stfusion and set parent environment
+Loading required package: foreach
+Loading required package: RcppArmadillo
+loaded stfusion and set parent environment
+Loading required package: iterators
+loaded stfusion and set parent environment
+Loading required package: fields
+Loading required package: spam
+Loading required package: dotCall64
+Loading required package: grid
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: Rcpp
+Loading required package: RcppArmadillo
+loaded stfusion and set parent environment
+starting worker pid=11128 on localhost:11735 at 15:06:48.478
+starting worker pid=1848 on localhost:11735 at 15:06:48.479
+starting worker pid=14928 on localhost:11735 at 15:06:48.491
+starting worker pid=10040 on localhost:11735 at 15:06:48.496
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: sp
+Loading required package: stars
+Loading required package: abind
+Loading required package: sf
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: parallel
+Loading required package: stfusion
+Loading required package: doParallel
+Loading required package: raster
+
+Loading required package: sp
+Loading required package: iterators
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: sp
+Loading required package: stars
+Loading required package: stfusion
+Loading required package: fields
+Loading required package: abind
+Loading required package: raster
+Loading required package: spam
+Loading required package: sp
+Loading required package: dotCall64
+Loading required package: stars
+Loading required package: sf
+Loading required package: abind
+Loading required package: grid
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: stars
+Loading required package: sf
+Loading required package: parallel
+Loading required package: abind
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Loading required package: doParallel
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: parallel
+Loading required package: Rcpp
+Loading required package: foreach
+Loading required package: sf
+Loading required package: doParallel
+Loading required package: foreach
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: RcppArmadillo
+Loading required package: iterators
+Loading required package: parallel
+Loading required package: iterators
+Loading required package: doParallel
+Loading required package: fields
+loaded stfusion and set parent environment
+Loading required package: foreach
+Loading required package: spam
+Loading required package: fields
+Loading required package: dotCall64
+Loading required package: spam
+Loading required package: iterators
+Loading required package: dotCall64
+Loading required package: grid
+Loading required package: grid
+Loading required package: fields
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Loading required package: spam
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+
+Attaching package: 'spam'
+
+Loading required package: dotCall64
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: Rcpp
+Loading required package: Rcpp
+Loading required package: grid
+Loading required package: RcppArmadillo
+Loading required package: RcppArmadillo
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: Rcpp
+loaded stfusion and set parent environment
+loaded stfusion and set parent environment
+Loading required package: RcppArmadillo
+loaded stfusion and set parent environment
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
+Execution halted
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
+Execution halted
+starting worker pid=11588 on localhost:11735 at 15:11:39.605
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: sp
+Loading required package: stars
+Loading required package: abind
+Loading required package: sf
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: parallel
+Loading required package: doParallel
+Loading required package: foreach
+Loading required package: iterators
+Loading required package: fields
+Loading required package: spam
+Loading required package: dotCall64
+Loading required package: grid
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: Rcpp
+Loading required package: RcppArmadillo
+loaded stfusion and set parent environment
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
+Execution halted
+starting worker pid=8664 on localhost:11735 at 15:17:00.811
+starting worker pid=3768 on localhost:11735 at 15:17:00.826
+starting worker pid=14416 on localhost:11735 at 15:17:00.836
+starting worker pid=12348 on localhost:11735 at 15:17:00.837
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: sp
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: sp
+Loading required package: stars
+Loading required package: stfusion
+Loading required package: abind
+Loading required package: raster
+Loading required package: stfusion
+Loading required package: sp
+Loading required package: raster
+Loading required package: stars
+Loading required package: sf
+Loading required package: sp
+Loading required package: abind
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: stars
+Loading required package: parallel
+Loading required package: sf
+Loading required package: abind
+Loading required package: stars
+Loading required package: doParallel
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: abind
+Loading required package: sf
+Loading required package: foreach
+Loading required package: parallel
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: sf
+Loading required package: iterators
+Loading required package: doParallel
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: parallel
+Loading required package: foreach
+Loading required package: parallel
+Loading required package: doParallel
+Loading required package: iterators
+Loading required package: fields
+Loading required package: foreach
+Loading required package: doParallel
+Loading required package: spam
+Loading required package: foreach
+Loading required package: dotCall64
+Loading required package: fields
+Loading required package: iterators
+Loading required package: spam
+Loading required package: iterators
+Loading required package: grid
+Loading required package: dotCall64
+Loading required package: fields
+Loading required package: grid
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Loading required package: spam
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Loading required package: fields
+Loading required package: dotCall64
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: spam
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Loading required package: Rcpp
+
+Attaching package: 'spam'
+
+Loading required package: dotCall64
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Loading required package: grid
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: Rcpp
+Loading required package: RcppArmadillo
+Loading required package: grid
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: 'spam'
+
+Loading required package: RcppArmadillo
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Loading required package: Rcpp
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+loaded stfusion and set parent environment
+Loading required package: Rcpp
+Loading required package: RcppArmadillo
+loaded stfusion and set parent environment
+Loading required package: RcppArmadillo
+loaded stfusion and set parent environment
+loaded stfusion and set parent environment
+There were 26 warnings (use warnings() to see them)
+ere were 13 warnings (use warnings() to see them)There were 13 warnings (use warnings() to see them)
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
+Execution halted
+Error in unserialize(node$con) : error reading from connection
+Calls: <Anonymous> ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
+Execution halted
+starting worker pid=10960 on localhost:11735 at 15:25:09.396
+starting worker pid=1328 on localhost:11735 at 15:25:09.396
+starting worker pid=13324 on localhost:11735 at 15:25:09.399
+starting worker pid=12420 on localhost:11735 at 15:25:09.410
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: sp
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: sp
+Loading required package: stars
+Loading required package: abind
+Loading required package: stars
+Loading required package: sf
+Loading required package: abind
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: sf
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: parallel
+Loading required package: parallel
+Loading required package: doParallel
+Loading required package: stfusion
+Loading required package: stfusion
+Loading required package: foreach
+Loading required package: doParallel
+Loading required package: raster
+Loading required package: raster
+Loading required package: sp
+Loading required package: foreach
+Loading required package: sp
+Loading required package: iterators
+Loading required package: iterators
+Loading required package: fields
+Loading required package: stars
+Loading required package: stars
+Loading required package: spam
+Loading required package: abind
+Loading required package: abind
+Loading required package: dotCall64
+Loading required package: fields
+Loading required package: sf
+Loading required package: sf
+Loading required package: spam
+Loading required package: grid
+Loading required package: dotCall64
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Loading required package: parallel
+Loading required package: grid
+
+Attaching package: 'spam'
+
+Loading required package: parallel
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: doParallel
+Loading required package: Rcpp
+Loading required package: doParallel
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Loading required package: foreach
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Loading required package: foreach
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: Rcpp
+Loading required package: RcppArmadillo
+Loading required package: iterators
+Loading required package: iterators
+Loading required package: RcppArmadillo
+Loading required package: fields
+Loading required package: fields
+Loading required package: spam
+Loading required package: spam
+Loading required package: dotCall64
+loaded stfusion and set parent environment
+Loading required package: dotCall64
+loaded stfusion and set parent environment
+Loading required package: grid
+Loading required package: grid
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Loading required package: Rcpp
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: Rcpp
+Loading required package: RcppArmadillo
+Loading required package: RcppArmadillo
+loaded stfusion and set parent environment
+loaded stfusion and set parent environment
+There were 25 warnings (use warnings() to see them)
+
+There were 12 warnings (use warnings() to see them)
+There were 12 warnings (use warnings() to see them)
+starting worker pid=13316 on localhost:11735 at 15:31:43.333
+starting worker pid=1524 on localhost:11735 at 15:31:43.341
+starting worker pid=10532 on localhost:11735 at 15:31:43.350
+starting worker pid=15228 on localhost:11735 at 15:31:43.354
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: sp
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: stfusion
+Loading required package: stars
+Loading required package: sp
+Loading required package: raster
+Loading required package: abind
+Loading required package: sp
+Loading required package: sf
+Loading required package: stars
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: abind
+Loading required package: stars
+Loading required package: stfusion
+Loading required package: parallel
+Loading required package: abind
+Loading required package: sf
+Loading required package: raster
+Loading required package: doParallel
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: sp
+Loading required package: foreach
+Loading required package: sf
+Loading required package: parallel
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: iterators
+Loading required package: doParallel
+Loading required package: stars
+Loading required package: foreach
+Loading required package: parallel
+Loading required package: abind
+Loading required package: iterators
+Loading required package: doParallel
+Loading required package: fields
+Loading required package: sf
+Loading required package: foreach
+Loading required package: spam
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: dotCall64
+Loading required package: parallel
+Loading required package: iterators
+Loading required package: fields
+Loading required package: grid
+Loading required package: spam
+Loading required package: doParallel
+Loading required package: dotCall64
+Loading required package: foreach
+Loading required package: fields
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Loading required package: grid
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Loading required package: dotCall64
+Loading required package: iterators
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Loading required package: Rcpp
+Loading required package: grid
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: fields
+Loading required package: Rcpp
+Loading required package: RcppArmadillo
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Loading required package: spam
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Loading required package: dotCall64
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: RcppArmadillo
+Loading required package: Rcpp
+Loading required package: grid
+Loading required package: RcppArmadillo
+loaded stfusion and set parent environment
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+loaded stfusion and set parent environment
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: Rcpp
+loaded stfusion and set parent environment
+Loading required package: RcppArmadillo
+loaded stfusion and set parent environment
+There were 25 warnings (use warnings() to see them)There were 25 warnings (use warnings() to see them)
+There were 12 warnings (use warnings() to see them)
+There were 12 warnings (use warnings() to see them)
+starting worker pid=11960 on localhost:11735 at 15:52:06.971
+starting worker pid=9644 on localhost:11735 at 15:52:07.055
+starting worker pid=15064 on localhost:11735 at 15:52:07.055
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: sp
+Loading required package: stars
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: abind
+Loading required package: stfusion
+Loading required package: sp
+Loading required package: raster
+Loading required package: stfusion
+Loading required package: sf
+Loading required package: sp
+Loading required package: raster
+Loading required package: sp
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: stars
+Loading required package: stars
+Loading required package: abind
+Loading required package: stars
+Loading required package: parallel
+Loading required package: abind
+Loading required package: abind
+Loading required package: sf
+Loading required package: doParallel
+Loading required package: sf
+Loading required package: sf
+Loading required package: foreach
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: parallel
+Loading required package: iterators
+Loading required package: parallel
+Loading required package: parallel
+Loading required package: doParallel
+Loading required package: foreach
+Loading required package: doParallel
+Loading required package: doParallel
+Loading required package: foreach
+Loading required package: fields
+Loading required package: foreach
+Loading required package: iterators
+Loading required package: spam
+Loading required package: iterators
+Loading required package: dotCall64
+Loading required package: iterators
+Loading required package: fields
+Loading required package: grid
+Loading required package: spam
+Loading required package: fields
+Loading required package: dotCall64
+Loading required package: spam
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Loading required package: fields
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Loading required package: grid
+Loading required package: dotCall64
+Loading required package: spam
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: dotCall64
+Loading required package: grid
+Loading required package: Rcpp
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Loading required package: grid
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: RcppArmadillo
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Loading required package: Rcpp
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: RcppArmadillo
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: Rcpp
+Loading required package: Rcpp
+loaded stfusion and set parent environment
+Loading required package: RcppArmadillo
+Loading required package: RcppArmadillo
+loaded stfusion and set parent environment
+loaded stfusion and set parent environment
+loaded stfusion and set parent environment
+There were 24 warnings (use warnings() to see them)There were 12 warnings (use warnings() to see them)
+
+
+There were 24 warnings (use warnings() to see them)
+starting worker pid=12148 on localhost:11735 at 15:55:16.430
+starting worker pid=9144 on localhost:11735 at 15:55:16.430
+
+starting worker pid=3188 on localhost:11735 at 15:55:16.431
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: sp
+Loading required package: stars
+Loading required package: abind
+Loading required package: stfusion
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: raster
+Loading required package: sf
+Loading required package: sp
+Loading required package: sp
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: stars
+l
+Loading required package: abind
+Loading required package: stars
+Loading required package: doParallel
+Loading required package: abind
+Loading required package: foreach
+Loading required package: sf
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: sf
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: iterators
+Loading required package: sp
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: parallel
+Loading required package: parallel
+Loading required package: doParallel
+Loading required package: stars
+Loading required package: fields
+Loading required package: foreach
+Loading required package: abind
+Loading required package: spam
+Loading required package: doParallel
+Loading required package: dotCall64
+Loading required package: foreach
+Loading required package: iterators
+Loading required package: sf
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: iterators
+Loading required package: grid
+Loading required package: fields
+Loading required package: parallel
+Loading required package: spam
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Loading required package: dotCall64
+Loading required package: doParallel
+Loading required package: fields
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Loading required package: foreach
+Loading required package: spam
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: grid
+Loading required package: dotCall64
+Loading required package: Rcpp
+Loading required package: iterators
+Loading required package: RcppArmadillo
+Loading required package: grid
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Loading required package: fields
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: Rcpp
+Loading required package: spam
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Loading required package: dotCall64
+
+Attaching package: 'spam'
+
+Loading required package: RcppArmadillo
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: grid
+Loading required package: Rcpp
+loaded stfusion and set parent environment
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Loading required package: RcppArmadillo
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+loaded stfusion and set parent environment
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: Rcpp
+Loading required package: RcppArmadillo
+loaded stfusion and set parent environment
+loaded stfusion and set parent environment
+There were 24 warnings (use warnings() to see them)
+There were 12 warnings (use warnings() to see them)
+There were 12 warnings (use warnings() to see them)
+There were 24 warnings (use warnings() to see them)
+starting worker pid=10516 on localhost:11735 at 15:57:01.025
+starting worker pid=7072 on localhost:11735 at 15:57:01.030
+starting worker pid=14400 on localhost:11735 at 15:57:01.040
+starting worker pid=11256 on localhost:11735 at 15:57:01.045
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: sp
+Loading required package: stars
+Loading required package: abind
+Loading required package: sf
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: parallel
+Loading required package: doParallel
+Loading required package: foreach
+Loading required package: iterators
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: sp
+Loading required package: fields
+Loading required package: spam
+Loading required package: stfusion
+Loading required package: dotCall64
+Loading required package: raster
+Loading required package: stars
+Loading required package: abind
+Loading required package: sp
+Loading required package: grid
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: sf
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Loading required package: sp
+
+Attaching package: 'spam'
+
+Loading required package: stars
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: abind
+Loading required package: Rcpp
+Loading required package: parallel
+Loading required package: sf
+Loading required package: doParallel
+Loading required package: stars
+Loading required package: RcppArmadillo
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: foreach
+Loading required package: abind
+Loading required package: parallel
+Loading required package: iterators
+Loading required package: sf
+Loading required package: doParallel
+loaded stfusion and set parent environment
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: foreach
+Loading required package: fields
+Loading required package: parallel
+Loading required package: iterators
+Loading required package: spam
+Loading required package: dotCall64
+Loading required package: doParallel
+Loading required package: foreach
+Loading required package: grid
+
+Loading required package: spam
+Loading required package: iterators
+Loading required package: dotCall64
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Loading required package: grid
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: Rcpp
+
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Loading required package: spam
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+Loading required package: dotCall64
+Loading required package: RcppArmadillo
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: Rcpp
+Loading required package: grid
+Loading required package: RcppArmadillo
+loaded stfusion and set parent environment
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: Rcpp
+loaded stfusion and set parent environment
+Loading required package: RcppArmadillo
+loaded stfusion and set parent environment
+There were 12 warnings (use warnings() to see them)
+There were 12 warnings (use warnings() to see them)
+There were 24 warnings (use warnings() to see them)
+There were 24 warnings (use warnings() to see them)
+starting worker pid=14236 on localhost:11735 at 16:08:33.631
+starting worker pid=4884 on localhost:11735 at 16:08:33.631
+starting worker pid=12864 on localhost:11735 at 16:08:33.637
+starting worker pid=4152 on localhost:11735 at 16:08:33.643
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: sp
+Loading required package: stfusion
+Loading required package: raster
+Loading required package: sp
+Loading required package: stars
+Loading required package: stfusion
+Loading required package: abind
+Loading required package: stars
+Loading required package: raster
+Loading required package: abind
+Loading required package: sp
+Loading required package: sf
+Loading required package: sf
+Loading required package: stfusion
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: raster
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: sp
+Loading required package: parallel
+Loading required package: stars
+Loading required package: parallel
+Loading required package: abind
+Loading required package: doParallel
+Loading required package: foreach
+Loading required package: stars
+Loading required package: doParallel
+Loading required package: sf
+Loading required package: abind
+Loading required package: foreach
+Loading required package: iterators
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: sf
+Loading required package: iterators
+Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+Loading required package: parallel
+Loading required package: fields
+Loading required package: parallel
+Loading required package: fields
+Loading required package: spam
+Loading required package: doParallel
+Loading required package: spam
+Loading required package: dotCall64
+Loading required package: dotCall64
+Loading required package: doParallel
+Loading required package: foreach
+Loading required package: foreach
+Loading required package: grid
+Loading required package: grid
+Loading required package: iterators
+Loading required package: iterators
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: fields
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: Rcpp
+Loading required package: Rcpp
+Loading required package: spam
+Loading required package: fields
+Loading required package: dotCall64
+Loading required package: RcppArmadillo
+Loading required package: spam
+Loading required package: RcppArmadillo
+Loading required package: grid
+Loading required package: dotCall64
+Loading required package: grid
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: 'spam'
+
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+loaded stfusion and set parent environment
+loaded stfusion and set parent environment
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Spam version 2.6-0 (2020-12-14) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: 'spam'
+
+Loading required package: Rcpp
+The following objects are masked from 'package:base':
+
+    backsolve, forwardsolve
+
+See https://github.com/NCAR/Fields for
+ an extensive vignette, other supplements and source code 
+Loading required package: Rcpp
+Loading required package: RcppArmadillo
+Loading required package: RcppArmadillo
+loaded stfusion and set parent environment
+loaded stfusion and set parent environment
+There were 12 warnings (use warnings() to see them)There were 12 warnings (use warnings() to see them)There were 24 warnings (use warnings() to see them)There were 24 warnings (use warnings() to see them)

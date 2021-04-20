@@ -278,6 +278,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// composite_loisi
+arma::uvec composite_loisi(arma::mat& x, arma::vec& y, arma::ivec& cdims, int w);
+RcppExport SEXP _stfusion_composite_loisi(SEXP xSEXP, SEXP ySEXP, SEXP cdimsSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< arma::ivec& >::type cdims(cdimsSEXP);
+    Rcpp::traits::input_parameter< int >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(composite_loisi(x, y, cdims, w));
+    return rcpp_result_gen;
+END_RCPP
+}
 // filter_rand
 int filter_rand(arma::mat x);
 RcppExport SEXP _stfusion_filter_rand(SEXP xSEXP) {
@@ -420,6 +434,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_stfusion_filter_loa", (DL_FUNC) &_stfusion_filter_loa, 1},
     {"_stfusion_composite_loa", (DL_FUNC) &_stfusion_composite_loa, 4},
     {"_stfusion_composite_lois", (DL_FUNC) &_stfusion_composite_lois, 4},
+    {"_stfusion_composite_loisi", (DL_FUNC) &_stfusion_composite_loisi, 4},
     {"_stfusion_filter_rand", (DL_FUNC) &_stfusion_filter_rand, 1},
     {"_stfusion_composite_rand", (DL_FUNC) &_stfusion_composite_rand, 4},
     {"_stfusion_wcor", (DL_FUNC) &_stfusion_wcor, 3},

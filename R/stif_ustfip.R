@@ -66,9 +66,11 @@ stif_ustfip <- function(f.ts,
     fones <- setValues(ftm, 1)
     
     # composite
-    if(selec == "optimal") c.cmp <- composite_lois(x.mat, y.mat, cnm, sngb.lr)
-    if(selec == "lastavl") c.cmp <- composite_loa(x.mat, y.mat, cnm, sngb.lr)
     if(selec == "randomv") c.cmp <- composite_rand(x.mat, y.mat, cnm, sngb.lr)
+    if(selec == "lastavl") c.cmp <- composite_loa(x.mat, y.mat, cnm, sngb.lr)
+    if(selec == "optimal") c.cmp <- composite_lois(x.mat, y.mat, cnm, sngb.lr)
+    if(selec == "wgoptim") c.cmp <- composite_wlois(x.mat, y.mat, cnm, sngb.lr)
+    if(selec == "optimsi") c.cmp <- composite_loisi(x.mat, y.mat, cnm, sngb.lr)
     f.cmp <- as.matrix(resample(setValues(ctm, c.cmp), ftm, "ngb")[])
     f.ref <- setValues(ftm,composite_genr(f.mat, f.cmp))
     
